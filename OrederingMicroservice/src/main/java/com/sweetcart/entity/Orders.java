@@ -1,8 +1,7 @@
 package com.sweetcart.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Sumejja on 23.03.2018..
@@ -16,8 +15,28 @@ public class Orders {
 
     private String adress;
     private long telephone;
-    private long clientid;
-    private long offerid;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="client_id")
+    private Client client;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="offer_id")
+    private Offer offer;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "orders_requirement", joinColumns = @JoinColumn(name = "orders_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "requirement_id", referencedColumnName = "id"))
+
+    private Set<Requirement> requirements;
+
+    public Orders() {
+    }
+
+    public Orders(long id, String adress, long telephone, Client client, Offer offer, Set<Requirement> requirements ) {
+        this.id = id;
+        this.adress = adress;
+        this.telephone = telephone;
+        this.client = client;
+        this.offer = offer;
+        this.requirements=requirements;
+    }
 
     public long getId() {
         return id;
@@ -43,20 +62,27 @@ public class Orders {
         this.telephone = telephone;
     }
 
-    public long getClientid() {
-        return clientid;
+
+    public  Client getClient() {
+        return client;
     }
 
-    public void setClientid(long clientid) {
-        this.clientid = clientid;
+    public void setClient(Client client) { this.client = client; }
+
+    public Offer getOffer() {
+        return offer;
     }
 
-    public long getOfferid() {
-        return offerid;
+    public void setOffer(Offer offerid) {
+        this.offer= offer;
     }
 
-    public void setOfferid(long offerid) {
-        this.offerid = offerid;
+
+    public Set<Requirement> getRequirements() {
+        return requirements;
     }
 
+    public void setRequirements(Set<Requirement> requirements) {
+        this.requirements = requirements;
+    }
 }

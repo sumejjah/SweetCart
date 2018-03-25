@@ -35,8 +35,8 @@ public class OrdersController {
         Orders orders = new Orders();
         orders.setAdress(addOrderRequest.getAdress());
         orders.setTelephone(addOrderRequest.getTelephone());
-        orders.setClientid(addOrderRequest.getClientid());
-        orders.setOfferid(addOrderRequest.getOfferid());
+        orders.setClient(addOrderRequest.getClient());
+        orders.setOffer(addOrderRequest.getOffer());
 
         ordersRepository.save(orders);
     }

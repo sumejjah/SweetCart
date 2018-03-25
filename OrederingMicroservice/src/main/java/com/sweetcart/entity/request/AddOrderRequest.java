@@ -1,5 +1,8 @@
 package com.sweetcart.entity.request;
 
+import com.sweetcart.entity.Client;
+import com.sweetcart.entity.Offer;
+
 /**
  * Created by Sumejja on 23.03.2018..
  */
@@ -7,8 +10,9 @@ public class AddOrderRequest {
 
     private String adress;
     private long telephone;
-    private long clientid;
-    private long offerid;
+    private Client client;
+    private Offer offer;
+
 
     public String getAdress() {
         return adress;
@@ -26,19 +30,19 @@ public class AddOrderRequest {
         this.telephone = telephone;
     }
 
-    public long getClientid() {
-        return clientid;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientid(long clientid) {
-        this.clientid = clientid;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public long getOfferid() {
-        return offerid;
+    public Offer getOffer() {
+        return offer;
     }
 
-    public void setOfferid(long offerid) {
-        this.offerid = offerid;
+    public void setOffer(Offer offerid) {
+        this.offer = offer;
     }
 }
