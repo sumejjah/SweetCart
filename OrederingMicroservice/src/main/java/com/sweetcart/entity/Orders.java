@@ -1,25 +1,23 @@
 package com.sweetcart.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+/**
+ * Created by Sumejja on 23.03.2018..
+ */
 @Entity
-@Table(name = "orders")
-public class Order{
+public class Orders {
 
     @Id
     @GeneratedValue
     private long id;
-    @Column(name="client_id")
-    private long clientid;
 
-    @Column(name = "offer_id")
-    private long offerid;
-
-    @Column(name = "adress")
     private String adress;
-
-    @Column(name = "telephone")
     private long telephone;
+    private long clientid;
+    private long offerid;
 
     public long getId() {
         return id;
@@ -27,22 +25,6 @@ public class Order{
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getClientid() {
-        return clientid;
-    }
-
-    public void setClientid(long clientid) {
-        this.clientid = clientid;
-    }
-
-    public long getOfferid() {
-        return offerid;
-    }
-
-    public void setOfferid(long offerid) {
-        this.offerid = offerid;
     }
 
     public String getAdress() {
@@ -59,6 +41,22 @@ public class Order{
 
     public void setTelephone(long telephone) {
         this.telephone = telephone;
+    }
+
+    public long getClientid() {
+        return clientid;
+    }
+
+    public void setClientid(long clientid) {
+        this.clientid = clientid;
+    }
+
+    public long getOfferid() {
+        return offerid;
+    }
+
+    public void setOfferid(long offerid) {
+        this.offerid = offerid;
     }
 
 }

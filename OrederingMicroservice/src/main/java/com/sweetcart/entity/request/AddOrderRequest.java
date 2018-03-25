@@ -1,29 +1,14 @@
 package com.sweetcart.entity.request;
 
 /**
- * Created by Sumejja on 20.03.2018..
+ * Created by Sumejja on 23.03.2018..
  */
 public class AddOrderRequest {
-    private long clientid;
-    private long offerid;
+
     private String adress;
     private long telephone;
-
-    public long getClientid() {
-        return clientid;
-    }
-
-    public void setClientid(long clientid) {
-        this.clientid = clientid;
-    }
-
-    public long getOfferid() {
-        return offerid;
-    }
-
-    public void setOfferid(long offerid) {
-        this.offerid = offerid;
-    }
+    private long clientid;
+    private long offerid;
 
     public String getAdress() {
         return adress;
@@ -41,4 +26,19 @@ public class AddOrderRequest {
         this.telephone = telephone;
     }
 
+    public long getClientid() {
+        return clientid;
+    }
+
+    public void setClientid(long clientid) {
+        this.clientid = clientid;
+    }
+
+    public long getOfferid() {
+        return offerid;
+    }
+
+    public void setOfferid(long offerid) {
+        this.offerid = offerid;
+    }
 }
