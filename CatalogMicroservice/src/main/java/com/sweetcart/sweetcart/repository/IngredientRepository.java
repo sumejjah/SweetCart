@@ -1,6 +1,6 @@
-package com.sweetcart.repository;
+package com.sweetcart.sweetcart.repository;
 
-import com.sweetcart.entity.Ingredient;
+import com.sweetcart.sweetcart.entity.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

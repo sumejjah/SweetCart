@@ -1,15 +1,6 @@
-package com.sweetcart.entity;
+package com.sweetcart.sweetcart.entity.Request;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
-public class Offer {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class AddOfferRequest {
 
     private String name;
 
@@ -18,17 +9,6 @@ public class Offer {
     private long cake_shopid;
 
     private double avg_review;
-
-    private double price;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -70,6 +50,5 @@ public class Offer {
         this.price = price;
     }
 
-
-
+    private double price;
 }

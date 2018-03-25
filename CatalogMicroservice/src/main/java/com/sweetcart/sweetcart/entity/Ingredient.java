@@ -1,4 +1,4 @@
-package com.sweetcart.entity;
+package com.sweetcart.sweetcart.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

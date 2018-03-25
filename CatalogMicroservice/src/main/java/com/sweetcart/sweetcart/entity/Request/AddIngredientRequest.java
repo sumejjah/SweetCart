@@ -1,7 +1,9 @@
-package com.sweetcart.entity.request;
+package com.sweetcart.sweetcart.entity.Request;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 public class AddIngredientRequest {
-
     public String getName() {
         return name;
     }

@@ -1,8 +1,8 @@
-package com.sweetcart.controller;
+package com.sweetcart.sweetcart.controller;
 
-import com.sweetcart.entity.Offer;
-import com.sweetcart.entity.request.AddOfferRequest;
-import com.sweetcart.repository.OfferRepository;
+import com.sweetcart.sweetcart.entity.Offer;
+import com.sweetcart.sweetcart.entity.Request.AddOfferRequest;
+import com.sweetcart.sweetcart.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/offers")
 public class OfferController {
-
     private OfferRepository offerRepository;
 
     @Autowired
@@ -22,13 +21,13 @@ public class OfferController {
         this.offerRepository = offerRepository;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Offer> findAllOffers ()
     {
         return offerRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void addOffer (@RequestBody AddOfferRequest addOfferRequest)
     {
         Offer offer = new Offer();

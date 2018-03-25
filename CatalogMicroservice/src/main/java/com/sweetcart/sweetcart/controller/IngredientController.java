@@ -1,8 +1,8 @@
-package com.sweetcart.controller;
+package com.sweetcart.sweetcart.controller;
 
-import com.sweetcart.entity.Ingredient;
-import com.sweetcart.entity.request.AddIngredientRequest;
-import com.sweetcart.repository.IngredientRepository;
+import com.sweetcart.sweetcart.entity.Ingredient;
+import com.sweetcart.sweetcart.entity.Request.AddIngredientRequest;
+import com.sweetcart.sweetcart.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +21,13 @@ public class IngredientController {
         this.ingredientRepository = ingredientRepository;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Ingredient> findAllIngredients ()
     {
         return ingredientRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void addIngredient (@RequestBody AddIngredientRequest addIngredientRequest)
     {
         Ingredient ingredient = new Ingredient();
@@ -35,3 +35,4 @@ public class IngredientController {
         ingredientRepository.save(ingredient);
     }
 }
+
