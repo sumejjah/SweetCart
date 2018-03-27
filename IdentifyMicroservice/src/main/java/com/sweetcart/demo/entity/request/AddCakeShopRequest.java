@@ -1,11 +1,13 @@
 package com.sweetcart.demo.entity.request;
 
+import com.sweetcart.demo.entity.User;
+
 public class AddCakeShopRequest {
     private String name;
     private String address;
     private String description;
 
-    private Long userId;
+    private User userId;
 
     public String getName() {
         return name;
@@ -31,11 +33,11 @@ public class AddCakeShopRequest {
         this.description = description;
     }
 
-    public Long getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 }

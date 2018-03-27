@@ -1,19 +1,37 @@
 package com.sweetcart.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Client {
+
+    @NotNull
+    @Min(1) @Max(10)
     @Id
     @GeneratedValue
     private Long id;
 
+
+    @Max(10)
     private Integer bonus;
+
+    @NotNull
+    @Size(min=1,max=60)
     private String firstName;
+
+    @NotNull
+    @Size(min=1,max=60)
     private String lastName;
-    private Long userId;
+
+
+
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id")
+    private User userId;
 
     public Long getId() {
         return id;
@@ -47,11 +65,11 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public Long getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 }

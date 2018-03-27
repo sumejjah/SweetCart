@@ -27,7 +27,7 @@ public class CakeShopController {
     }
 
     @RequestMapping(value="/add", method=RequestMethod.POST)
-    public void addClient(@RequestBody AddCakeShopRequest addCakeShopRequest){
+    public void addCakeShop(@RequestBody AddCakeShopRequest addCakeShopRequest){
         CakeShop cakeShop=new CakeShop();
         cakeShop.setName(addCakeShopRequest.getName());
         cakeShop.setAddress(addCakeShopRequest.getAddress());

@@ -1,10 +1,12 @@
 package com.sweetcart.demo.entity.request;
 
+import com.sweetcart.demo.entity.User;
+
 public class AddClientRequest {
     private Integer bonus;
     private String firstName;
     private String lastName;
-    private Long userId;
+    private User userId;
 
     public Integer getBonus() {
         return bonus;
@@ -30,11 +32,11 @@ public class AddClientRequest {
         this.lastName = lastName;
     }
 
-    public Long getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 }
