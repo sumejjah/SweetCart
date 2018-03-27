@@ -1,29 +1,42 @@
 package com.sweetcart.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  * Created by Sumejja on 23.03.2018..
  */
 @Entity
-public class Orders {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Orders implements Serializable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull(message = "adress must be input")
     private String adress;
     private long telephone;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="client_id")
     private Client client;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="offer_id")
     private Offer offer;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "orders_requirement", joinColumns = @JoinColumn(name = "orders_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "requirement_id", referencedColumnName = "id"))
 
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "orders_requirement",
+            joinColumns = @JoinColumn(name = "orders_id"),
+            inverseJoinColumns = @JoinColumn(name = "requirement_id")    )
     private Set<Requirement> requirements;
 
     public Orders() {

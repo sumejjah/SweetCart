@@ -1,32 +1,36 @@
 package com.sweetcart.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "client")
-public class Client {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Client implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+
+    @Min(0)
     private int bonus;
+
+    @NotNull (message = "firstName must be input") @Size(min = 2, max = 60, message = "size between 2 and 60")
     private String firstName;
+
+    @NotNull(message = "lastName must be input") @Size(min = 2, max = 60, message = "size between 2 and 60")
     private String lastName;
-    private long userid;
+
+    @NotNull(message = "userid must be input")
+    private Long userid;
 
 
     public Client() {
     }
-
-    public Client(long id, int bonus, String firstName, String lastName, long userid) {
-        this.id = id;
-        this.bonus = bonus;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userid = userid;
-
-    }
-
-
 
     public long getId() {
         return id;
@@ -60,11 +64,11 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public long getUserid() {
+    public Long getUserid() {
         return userid;
     }
 
-    public void setUserid(long userid) {
+    public void setUserid(Long userid) {
         this.userid = userid;
     }
 }

@@ -1,13 +1,14 @@
 package com.sweetcart.entity.request;
 
 import com.sweetcart.entity.Orders;
+import org.apache.catalina.User;
 
 public class AddClientRequest {
 
     private int bonus;
     private String firstName;
     private String lastName;
-    private long userid;
+    private Long userid;
     private Orders orders;
 
     public Orders getOrders() {
@@ -42,11 +43,11 @@ public class AddClientRequest {
         this.lastName = lastName;
     }
 
-    public long getUserid() {
+    public Long getUserid() {
         return userid;
     }
 
-    public void setUserid(long userid) {
+    public void setUserid(Long userid) {
         this.userid = userid;
     }
 }

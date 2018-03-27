@@ -1,17 +1,22 @@
 package com.sweetcart.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class Requirement {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Requirement implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+
+    @NotNull
     private boolean confirmed;
+
     @ManyToMany(mappedBy = "requirements")
     private Set<Orders> orders;
 
