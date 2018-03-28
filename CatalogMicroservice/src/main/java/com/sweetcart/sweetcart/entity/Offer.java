@@ -1,25 +1,46 @@
 package com.sweetcart.sweetcart.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 public class Offer {
     @Id
     @GeneratedValue
+
     private Long id;
 
+    @NotNull(message = "Name must be input")
+    @Size(min=1, max=60, message = "size between 1 and 60")
     private String name;
 
+    @NotNull(message = "Category must be input")
+    @Size(min=1, max=60, message = "size between 1 and 60")
     private String category;
 
-    private long cake_shopid;
-
+    @Size(min=1, max=10, message = "size between 1 and 10")
     private double avg_review;
 
+    @NotNull(message = "Price must be input")
+    @Size(min=1, max=10, message = "size between 1 and 10")
     private double price;
 
+    @ManyToOne(targetEntity = CakeShop.class)
+    @JoinColumn(name = "cake_shop_id")
+    private CakeShop cakeShopId;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "offer_ingredient",
+            joinColumns = @JoinColumn(name = "offer_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+
+
+    private Set<Ingredient> ingredients;
 
     public Long getId() {
         return id;
@@ -45,13 +66,7 @@ public class Offer {
         this.category = category;
     }
 
-    public long getCake_shopid() {
-        return cake_shopid;
-    }
 
-    public void setCake_shopid(long cake_shopid) {
-        this.cake_shopid = cake_shopid;
-    }
 
     public double getAvg_review() {
         return avg_review;
@@ -67,5 +82,20 @@ public class Offer {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    public CakeShop getCakeShopId() {
+        return cakeShopId;
+    }
+
+    public void setCakeShopId(CakeShop cakeShopId) {
+        this.cakeShopId = cakeShopId;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

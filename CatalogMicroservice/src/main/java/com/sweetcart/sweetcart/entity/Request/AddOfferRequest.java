@@ -6,9 +6,11 @@ public class AddOfferRequest {
 
     private String category;
 
-    private long cake_shopid;
+    private Long cake_shopid;
 
     private double avg_review;
+
+    private double price;
 
     public String getName() {
         return name;
@@ -26,7 +28,7 @@ public class AddOfferRequest {
         this.category = category;
     }
 
-    public long getCake_shopid() {
+    public Long getCake_shopid() {
         return cake_shopid;
     }
 
@@ -50,5 +52,5 @@ public class AddOfferRequest {
         this.price = price;
     }
 
-    private double price;
+
 }
