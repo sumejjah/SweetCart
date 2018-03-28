@@ -7,12 +7,17 @@ import com.sweetcart.entity.request.AddRequirementRequest;
 import com.sweetcart.repository.OrdersRepository;
 import com.sweetcart.repository.RequirementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(value = "/requirement")
 public class RequirementController {
@@ -23,7 +28,7 @@ public class RequirementController {
         this.requirementRepository = requirementRepository;
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Requirement> findAll(){
         return requirementRepository.findAll();
     }
@@ -34,5 +39,76 @@ public class RequirementController {
         requirement.setConfirmed(addRequirementRequest.isConfirmed());
 
         requirementRepository.save(requirement);
+    }*/
+
+    // GET ALL OFFERS
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    public ResponseEntity<Collection<Requirement>> findAll() {
+        Collection<Requirement> requirements = this.requirementRepository.findAll();
+        if(requirements.isEmpty()){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Collection<Requirement>>(requirements, HttpStatus.OK);
+    }
+
+    // RETRIEVE ONE OFFER
+    @RequestMapping(method = RequestMethod.GET, value = "/{requirementId}")
+    ResponseEntity<?> getRequirement (@PathVariable Long requirementId) {
+
+        Optional<Requirement> requirement = this.requirementRepository.findById(requirementId);
+        if (!requirement.isPresent()) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Optional<Requirement>>(requirement, HttpStatus.OK);
+    }
+
+    //CREATE NEW OFFER
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseEntity<?> createRequirement(@Valid @RequestBody Requirement requirement, UriComponentsBuilder ucBuilder) {
+
+        requirementRepository.save(requirement);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/requirement/{id}").buildAndExpand(requirement.getId()).toUri());
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+
+    //UPDATE
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateRequirement(@PathVariable("id") long id,@Valid @RequestBody Requirement requirement) {
+
+        Optional<Requirement> currentRequirement = requirementRepository.findById(id);
+
+        if (!currentRequirement.isPresent()) {
+            return new ResponseEntity(new CustomErrorType("Unable to update. Requirement with id " + id + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+
+        currentRequirement.get().setConfirmed(requirement.isConfirmed());
+        currentRequirement.get().setOrders(requirement.getOrders());
+
+        requirementRepository.save(currentRequirement.get());
+        return new ResponseEntity<Optional<Requirement>>(currentRequirement, HttpStatus.OK);
+    }
+
+    //DELETE ONE
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteRequirement(@PathVariable("id") long id) {
+
+        Optional<Requirement> requirement = requirementRepository.findById(id);
+        if (!requirement.isPresent()) {
+            return new ResponseEntity(new CustomErrorType("Unable to delete. Requirement with id " + id + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+        requirementRepository.deleteById(id);
+        return new ResponseEntity<Requirement>(HttpStatus.NO_CONTENT);
+    }
+
+    //DELETE ALL
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Requirement> deleteAll() {
+
+        requirementRepository.deleteAll();
+        return new ResponseEntity<Requirement>(HttpStatus.NO_CONTENT);
     }
 }
