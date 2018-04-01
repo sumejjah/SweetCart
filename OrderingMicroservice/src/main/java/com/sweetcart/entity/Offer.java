@@ -23,7 +23,7 @@ public class Offer implements Serializable{
     @NotNull(message = "name must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements")
     private String name;
 
-    @NotNull@NotNull(message = "category must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements")
+    @NotNull(message = "category must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements")
     private String category;
 
     @NotNull(message = "cake_shopid must be input")
