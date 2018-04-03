@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@JsonIdentityReference(alwaysAsId = true)
 public class Role {
-    @NotNull
+
     @Id
     @GeneratedValue
     private Long id;

@@ -80,7 +80,7 @@ public class UserController {
         Optional<User> currentUser = userRepository.findById(id);
 
         if (!currentUser.isPresent()) {
-            return new ResponseEntity(new CustomErrorType("Unable to update. Client with id " + id + " not found."),
+            return new ResponseEntity(new CustomErrorType("Unable to update. User with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
         }
 

@@ -9,8 +9,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Client {
 
-    @NotNull
-    @Min(1) @Max(10)
+
     @Id
     @GeneratedValue
     private Long id;
@@ -23,11 +22,20 @@ public class Client {
     @Size(min=1,max=60)
     private String firstName;
 
+    public Client() {
+    }
+
     @NotNull
     @Size(min=1,max=60)
+
     private String lastName;
 
-
+    public Client(@Max(10) Integer bonus, @NotNull @Size(min = 1, max = 60) String firstName, @NotNull @Size(min = 1, max = 60) String lastName, User userId) {
+        this.bonus = bonus;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userId = userId;
+    }
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id")

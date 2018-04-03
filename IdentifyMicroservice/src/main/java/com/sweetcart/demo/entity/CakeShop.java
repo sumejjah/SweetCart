@@ -7,8 +7,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class CakeShop {
-    @NotNull
-    @Max(10)
+
     @Id
     @GeneratedValue
     private Long id;
