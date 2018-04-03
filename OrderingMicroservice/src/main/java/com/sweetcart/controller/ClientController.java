@@ -7,14 +7,17 @@ import com.sweetcart.entity.request.AddOrderRequest;
 import com.sweetcart.repository.ClientRepository;
 import com.sweetcart.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +27,38 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/client")
 public class ClientController {
+
+    public ClientController(){}
+
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    public void getUsers() throws RestClientException, IOException {
+
+        List<ServiceInstance> instances=discoveryClient.getInstances("IdentifyMicroservice-service-client");
+        ServiceInstance serviceInstance=instances.get(0);
+
+        String baseUrl=serviceInstance.getUri().toString();
+
+        baseUrl=baseUrl+"/users/all";
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response=null;
+        try{
+            response=restTemplate.exchange(baseUrl,
+                    HttpMethod.GET, getHeaders(),String.class);
+        }catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
+        System.out.println(response.getBody());
+    }
+
+    private static HttpEntity<?> getHeaders() throws IOException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        return new HttpEntity<>(headers);
+    }
 
         private ClientRepository clientRepository;
 
