@@ -20,9 +20,9 @@ public class SweetcartCatalogApplication {
 		ApplicationContext ctx = SpringApplication.run(
 				SweetcartCatalogApplication.class, args);
 
-		CakeShopController cakeShopController=ctx.getBean(CakeShopController.class);
-		System.out.println(cakeShopController);
-		cakeShopController.getCakeShops();
+		//CakeShopController cakeShopController=ctx.getBean(CakeShopController.class);
+	//	System.out.println(cakeShopController);
+	//	cakeShopController.getCakeShops();
 
 	}
 

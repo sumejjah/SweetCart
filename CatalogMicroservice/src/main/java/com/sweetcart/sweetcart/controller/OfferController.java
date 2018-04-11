@@ -2,6 +2,7 @@ package com.sweetcart.sweetcart.controller;
 
 import com.sweetcart.sweetcart.entity.Ingredient;
 import com.sweetcart.sweetcart.entity.Offer;
+import com.sweetcart.sweetcart.entity.Producer;
 import com.sweetcart.sweetcart.entity.Request.AddOfferRequest;
 import com.sweetcart.sweetcart.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/offers")
 public class OfferController {
+    @Autowired
+    Producer producer;
+
+    @RequestMapping("/send")
+    public String sendMsg(@RequestParam("msg")String msg){
+        producer.produceMsg(msg);
+        return "USPJESNO";
+    }
+
     private OfferRepository offerRepository;
 
     @Autowired

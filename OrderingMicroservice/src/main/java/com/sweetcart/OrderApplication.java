@@ -24,9 +24,9 @@ public class OrderApplication {
 		ApplicationContext ctx = SpringApplication.run(
 				OrderApplication.class, args);
 
-		ClientController clientController=ctx.getBean(ClientController.class);
-		System.out.println(clientController);
-		clientController.getUsers();
+		//ClientController clientController=ctx.getBean(ClientController.class);
+		//System.out.println(clientController);
+		//clientController.getUsers();
 
 	}
 
