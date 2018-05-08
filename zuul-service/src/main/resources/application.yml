@@ -1,0 +1,28 @@
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+  routes:
+    IdentifyMicroservice-service-client:
+      path: /identify/**
+      url: http://localhost:8092
+    OrderingMicroservice-service-client:
+      path: /ordering/**
+      url: http://localhost:8091
+    CatalogMicroservice-service-client:
+      path: /catalog/**
+      url: http://localhost:8093
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka/
+  instance:
+    hostname: localhost
+
+server:
+  port: 8079
+
+spring:
+  application:
+    name: zuul-service
+

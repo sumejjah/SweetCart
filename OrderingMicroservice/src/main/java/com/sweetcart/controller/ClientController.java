@@ -28,37 +28,37 @@ import java.util.Optional;
 @RequestMapping(value = "/client")
 public class ClientController {
 
-    public ClientController(){}
+        public ClientController(){}
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
+        @Autowired
+        private DiscoveryClient discoveryClient;
 
-    public void getUsers() throws RestClientException, IOException {
+        public void getUsers() throws RestClientException, IOException {
 
-        List<ServiceInstance> instances=discoveryClient.getInstances("IdentifyMicroservice-service-client");
-        ServiceInstance serviceInstance=instances.get(0);
+            List<ServiceInstance> instances=discoveryClient.getInstances("IdentifyMicroservice-service-client");
+            ServiceInstance serviceInstance=instances.get(0);
 
-        String baseUrl=serviceInstance.getUri().toString();
+            String baseUrl=serviceInstance.getUri().toString();
 
-        baseUrl=baseUrl+"/users/all";
+            baseUrl=baseUrl+"/users/all";
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response=null;
-        try{
-            response=restTemplate.exchange(baseUrl,
-                    HttpMethod.GET, getHeaders(),String.class);
-        }catch (Exception ex)
-        {
-            System.out.println(ex);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response=null;
+            try{
+                response=restTemplate.exchange(baseUrl,
+                        HttpMethod.GET, getHeaders(),String.class);
+            }catch (Exception ex)
+            {
+                System.out.println(ex);
+            }
+            System.out.println(response.getBody());
         }
-        System.out.println(response.getBody());
-    }
 
-    private static HttpEntity<?> getHeaders() throws IOException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        return new HttpEntity<>(headers);
-    }
+        private static HttpEntity<?> getHeaders() throws IOException {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+            return new HttpEntity<>(headers);
+        }
 
         private ClientRepository clientRepository;
 
