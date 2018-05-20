@@ -32,6 +32,7 @@ public class UserController {
    // public List<User> findAllUsers(){return userRepository.findAll();}
 
     // GET ALL USERS
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<Collection<User>> findAll() {
         Collection<User> users = this.userRepository.findAll();
@@ -52,6 +53,7 @@ public class UserController {
         return new ResponseEntity<Optional<User>>(user, HttpStatus.OK);
     }
     //CREATE NEW USER
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@Valid @RequestBody User user, UriComponentsBuilder ucBuilder) {
 
