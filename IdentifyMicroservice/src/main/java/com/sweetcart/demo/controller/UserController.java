@@ -43,6 +43,7 @@ public class UserController {
     }
 
     // RETRIEVE ONE USER
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
     ResponseEntity<?> getUser (@PathVariable Long userId) {
 

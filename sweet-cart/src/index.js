@@ -6,6 +6,7 @@ import {Router, Route, browserHistory, IndexRoute} from "react-router";
 import {Root} from "./components/Root";
 import {Home} from "./components/Home";
 import {User} from "./components/User";
+import Register from "./components/Register";
 
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,6 +19,7 @@ class App extends React.Component {
                     <IndexRoute component={Home} />
                     <Route path={"user/:id"} component={User} />
                     <Route path={"home"} component={Home} />
+                    <Route path={"register"} component={Register} />
                 </Route>
                 <Route path={"home-single"} component={Home}/>
             </Router>
