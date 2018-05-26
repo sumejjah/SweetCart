@@ -21,13 +21,22 @@ constructor(props){
   }
 
   this.handleClick = this.handleClick.bind(this);
+  this.register = this.register.bind(this);
  }
+
+ register(event){
+    browserHistory.replace({
+        pathname: '/register',
+        state: {}
+      });
+  }
 
  handleClick(event){
     var self = this;
     var payload={
       	"userid":this.state.username
     }
+
 
     axios.get("http://localhost:8079/api/identify/users/" + payload.userid).then(res => {
       console.log(res);
@@ -68,6 +77,9 @@ render() {
                />
              <br/>
              <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+              <br/>
+             <RaisedButton label="Register" primary={true} style={style} onClick={(event) => this.register(event)}/>
+         
          </div>
          </MuiThemeProvider>
       </div>
