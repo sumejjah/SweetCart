@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cakeshops")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CakeShopController {
     private CakeShopRepository cakeShopRepository;
 

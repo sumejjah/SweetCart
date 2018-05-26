@@ -38,12 +38,12 @@ constructor(props){
     }
 
 
-    axios.get("http://localhost:8079/api/identify/users/" + payload.userid).then(res => {
+    axios.get("http://localhost:8079/api/identify/users/name/" + this.state.username).then(res => {
       console.log(res);
       if(res.status == 200){
        console.log("Login successfull");
        browserHistory.replace({
-        pathname: '/user/:' + payload.userid,
+        pathname: '/user/:' + res.data.id,
         state: {}
     	});
      }

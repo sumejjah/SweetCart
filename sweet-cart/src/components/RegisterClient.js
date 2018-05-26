@@ -23,24 +23,48 @@ class RegisterClient extends Component {
     var self = this;
     if(this.state.first_name.length>0 && this.state.last_name.length>0 && this.state.username.length>0 && this.state.password.length>0){
       var payload={
-      "username": this.state.first_name,
+      "id": '',
+      "username": this.state.username,
       "password":this.state.password,
       "roleId":{"id": 3}
       }
 
       var payload2 = {
-        "first_name": this.state.first_name,
-        "last_name": this.state.last_name,
+        "id": '',
         "bonus": 0,
-        "user_id": ''
+        "firstName": this.state.first_name,
+        "lastName": this.state.last_name,        
+        "userId": {"id": ''}
       }
 
-      axios.post(apiBaseUrl, payload)
-     .then(function (response) {
-       console.log(response);
-       if(response.status === 200){
-        console.log("registration successfull");
-        payload2.user_id = response.data.id;
+      axios.post(apiBaseUrl, payload).then(function (response) {
+       if(response.status == 201){
+        console.log("user registration successfull");
+
+        axios.get("http://localhost:8079/api/identify/users/name/" + payload.username).then(res => {
+        if(res.status == 200){
+          payload2.userId.id = res.data.id;
+          axios.post("http://localhost:8079/api/identify/clients/add", payload2)
+               .then(function (response) {
+                 if(response.status == 201){
+                  console.log("cake shop registration successfull");
+                 }
+                 else{
+                   console.log("some error ocurred",response.data.code);
+                 }
+               })
+               .catch(function (error) {
+                 console.log(error);
+               });
+
+         }
+         else{
+           console.log("Username does not exists");
+         }
+        }, err => {
+          alert("Server rejected response with: " + err);
+        });
+        
        }
        else{
          console.log("some error ocurred",response.data.code);
@@ -49,22 +73,15 @@ class RegisterClient extends Component {
      .catch(function (error) {
        console.log(error);
      });
+     
     }
     else{
       alert("Input field value is missing");
     }
 
-  }
+  }  
+
   render() {
-    var userhintText,userLabel;
-    if(this.props.role === "student"){
-      userhintText="Enter your Student Id",
-      userLabel="Student Id"
-    }
-    else{
-      userhintText="Enter your Teacher Id",
-      userLabel="Teacher Id"
-    }
     return (
       <div>
         <MuiThemeProvider>

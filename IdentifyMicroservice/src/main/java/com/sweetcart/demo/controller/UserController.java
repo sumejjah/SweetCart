@@ -76,6 +76,29 @@ public class UserController {
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
+    // RETRIEVE ONE USER BY NAME
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(method = RequestMethod.GET, value = "/name/{userName}")
+    ResponseEntity<?> getUserByName (@PathVariable String userName) {
+
+        Collection<User> users = this.userRepository.findAll();
+        User user = new User();
+        boolean exists = false;
+        for (User u: users) {
+            if(u.getUsername().equals(userName)){
+                exists = true;
+                user = u;
+            }
+        }
+
+        if (!exists) {
+            return new ResponseEntity(new CustomErrorType("Unable to login. A user with usernname " + userName + " doesn't exist."),HttpStatus.CONFLICT);
+        }
+
+
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
     //UPDATE USER
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@PathVariable("id") long id,@Valid @RequestBody User user) {

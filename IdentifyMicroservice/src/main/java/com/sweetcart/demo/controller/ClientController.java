@@ -47,6 +47,7 @@ public class ClientController {
         return new ResponseEntity<Optional<Client>>(client, HttpStatus.OK);
     }
     //CREATE NEW CLIENT
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> createClient(@Valid @RequestBody Client client, UriComponentsBuilder ucBuilder) {
 

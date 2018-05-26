@@ -19,29 +19,55 @@ class RegisterCakeShop extends Component {
   componentWillReceiveProps(nextProps){
     console.log("nextProps",nextProps);
   }
-  handleClick(event,role){
+  handleClick(event){
     var apiBaseUrl = "http://localhost:8079/api/identify/users/add";
     var self = this;
-    if(this.state.name.length>0 && this.state.adress.length>0 && this.state.username.length>0 && this.state.password.length>0){
+    //if(this.state.name.length>0 && this.state.adress.length>0 && this.state.username.length>0 && this.state.password.length>0){
       var payload={
-      "username": this.state.first_name,
+      "username": this.state.username,
       "password":this.state.password,
       "roleId":{"id": 2}
       }
 
       var payload2 = {
+        "id": '',
         "name": this.state.name,
         "address": this.state.address,
         "description": this.state.description,
-        "user_id": ''
+        "userId": {"id": ''}
       }
 
       axios.post(apiBaseUrl, payload)
      .then(function (response) {
-       console.log(response);
-       if(response.status === 200){
-        console.log("registration successfull");
-        payload2.user_id = response.data.id;
+       if(response.status == 201){
+        console.log("user registration successfull");
+        
+        axios.get("http://localhost:8079/api/identify/users/name/" + payload.username).then(res => {
+        if(res.status == 200){
+          payload2.userId.id = res.data.id;
+
+           axios.post("http://localhost:8079/api/identify/cakeshops/add", payload2)
+               .then(function (response) {
+                 if(response.status == 201){
+                  console.log("cake shop registration successfull");
+                 }
+                 else{
+                   console.log("some error ocurred",response.data.code);
+                 }
+               })
+               .catch(function (error) {
+                 console.log(error);
+               });
+
+         }
+         else{
+           console.log("Username does not exists");
+         }
+        }, err => {
+          alert("Server rejected response with: " + err);
+        });
+
+
        }
        else{
          console.log("some error ocurred",response.data.code);
@@ -50,22 +76,13 @@ class RegisterCakeShop extends Component {
      .catch(function (error) {
        console.log(error);
      });
-    }
-    else{
-      alert("Input field value is missing");
-    }
+    //}
+    //else{
+      //alert("Input field value is missing");
+    //}
 
   }
   render() {
-    var userhintText,userLabel;
-    if(this.props.role === "student"){
-      userhintText="Enter your Student Id",
-      userLabel="Student Id"
-    }
-    else{
-      userhintText="Enter your Teacher Id",
-      userLabel="Teacher Id"
-    }
     return (
       <div>
         <MuiThemeProvider>
@@ -101,7 +118,7 @@ class RegisterCakeShop extends Component {
              onChange = {(event,newValue) => this.setState({password:newValue})}
              />
            <br/>
-           <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
+           <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
           </div>
          </MuiThemeProvider>
       </div>
