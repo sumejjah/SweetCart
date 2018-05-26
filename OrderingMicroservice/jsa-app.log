@@ -1,0 +1,54 @@
+2018-05-25 21:00:29.377  INFO 17372 --- [main] com.sweetcart.OrderApplication           : No active profile set, falling back to default profiles: default
+2018-05-25 21:00:29.393  INFO 17372 --- [main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5b7a8434: startup date [Fri May 25 21:00:29 CEST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@38425407
+2018-05-25 21:00:30.498  INFO 17372 --- [main] o.s.b.f.s.DefaultListableBeanFactory     : Overriding bean definition for bean 'clientController' with a different definition: replacing [Generic bean: class [com.sweetcart.controller.ClientController]; scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Users\Sumejja\Desktop\nwt\OrderingMicroservice\target\classes\com\sweetcart\controller\ClientController.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=orderApplication; factoryMethodName=clientController; initMethodName=null; destroyMethodName=(inferred); defined in com.sweetcart.OrderApplication]
+2018-05-25 21:00:31.103  INFO 17372 --- [main] o.s.b.f.s.DefaultListableBeanFactory     : Overriding bean definition for bean 'dataSource' with a different definition: replacing [Root bean: class [null]; scope=refresh; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=false; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari; factoryMethodName=dataSource; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]] with [Root bean: class [org.springframework.aop.scope.ScopedProxyFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in BeanDefinition defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]]
+2018-05-25 21:00:31.331  INFO 17372 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ae375f3e-f0fb-3159-9b1e-067e8ffddb3c
+2018-05-25 21:00:31.364  INFO 17372 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-05-25 21:00:31.447  INFO 17372 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration' of type [org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration$$EnhancerBySpringCGLIB$$d835a17f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-05-25 21:00:31.574  INFO 17372 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$11c9e351] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-05-25 21:00:31.646  INFO 17372 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$2de3e64e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-05-25 21:00:32.950  INFO 17372 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2018-05-25 21:00:33.046  INFO 17372 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-05-25 21:00:33.046  INFO 17372 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.28
+2018-05-25 21:00:33.077  INFO 17372 --- [localhost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_131\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Docker\Docker\Resources\bin;C:\app\hsumejja\product\12.2.0\client_1;C:\app\hsumejja\product\12.2.0\client_1\bin;C:\app\sumejjah\product\12.2.0\client_1;C:\app\sumejjah\product\12.2.0\client_1\bin;C:\app\sumejjah\product\12.1.0\dbhome_1\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\MATLAB\R2015b\runtime\win64;C:\Program Files\MATLAB\R2015b\bin;C:\Program Files\MATLAB\R2015b\polyspace\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Users\Sumejja\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\TDM-GCC-64\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files (x86)\Java\jdk1.8.0_152\bin;C:\apache-maven-3.5.3\bin;C:\Program Files\MATLAB\MATLAB Runtime\v92\runtime\win64;C:\RailsInstaller\Git\cmd;C:\RailsInstaller\Ruby2.2.0\bin;C:\Users\Sumejja\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\Sumejja\AppData\Local\Programs\Python\Python36-32\;C:\Users\Sumejja\AppData\Local\Microsoft\WindowsApps;C:\Users\Sumejja\AppData\Roaming\npm;C:\Python27\;C:\Python27\Scripts;C:\Users\Sumejja\AppData\Local\Yarn\bin;C:\Program Files (x86)\Java\jdk1.8.0_152\bin;;.]
+2018-05-25 21:00:33.515  INFO 17372 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-05-25 21:00:33.515  INFO 17372 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4122 ms
+2018-05-25 21:00:33.743  INFO 17372 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2018-05-25 21:00:33.747  INFO 17372 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-05-25 21:00:33.747  INFO 17372 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-05-25 21:00:33.747  INFO 17372 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-05-25 21:00:33.747  INFO 17372 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-05-25 21:00:34.286  INFO 17372 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2018-05-25 21:00:34.924  INFO 17372 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2018-05-25 21:00:35.605  INFO 17372 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-05-25 21:00:35.905  INFO 17372 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-05-25 21:00:38.578  INFO 17372 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.2.14.Final}
+2018-05-25 21:00:38.594  INFO 17372 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-05-25 21:00:39.648  INFO 17372 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-05-25 21:00:41.585  INFO 17372 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-05-25 21:00:47.211  INFO 17372 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-05-25 21:00:49.478  WARN 17372 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'consumer' defined in file [C:\Users\Sumejja\Desktop\nwt\OrderingMicroservice\target\classes\com\sweetcart\entity\Consumer.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanInitializationException: Could not register rabbit listener endpoint on [public void com.sweetcart.entity.Consumer.recievedMessage(com.sweetcart.entity.Offer)] for bean consumer, no RabbitListenerContainerFactory with id 'jsaFactory' was found in the application context; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jsaFactory' available
+2018-05-25 21:00:49.478  INFO 17372 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-05-25 21:00:49.478  INFO 17372 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2018-05-25 21:00:49.493  INFO 17372 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2018-05-25 21:00:49.493  INFO 17372 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2018-05-25 21:00:49.605  INFO 17372 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2018-05-25 21:00:49.791 ERROR 17372 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean named 'jsaFactory' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'jsaFactory' in your configuration.
+

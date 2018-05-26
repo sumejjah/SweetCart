@@ -70,7 +70,7 @@ public class OfferController {
 
         //CREATE NEW OFFER
         @RequestMapping(value = "/add", method = RequestMethod.POST)
-        public ResponseEntity<?> createClient(@Valid @RequestBody Offer offer, UriComponentsBuilder ucBuilder) {
+        public ResponseEntity<?> createOffer(@Valid @RequestBody Offer offer, UriComponentsBuilder ucBuilder) {
 
             Collection<Offer> offers = this.offerRepository.findAll();
             boolean exists = false;
@@ -89,7 +89,26 @@ public class OfferController {
             return new ResponseEntity<String>(headers, HttpStatus.CREATED);
         }
 
-        //UPDATE
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> createOneOffer(@Valid @RequestBody Offer offer) {
+
+        Collection<Offer> offers = this.offerRepository.findAll();
+        boolean exists = false;
+        for (Iterator<Offer> i = offers.iterator(); i.hasNext();) {
+            if(i.next().getName().equals(offer.getName()))
+                exists = true;
+        }
+
+        if (exists) {
+            return new ResponseEntity(new CustomErrorType("Unable to create. A Country with name " + offer.getName() + " already exist."),HttpStatus.CONFLICT);
+        }
+        offerRepository.save(offer);
+
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+
+    //UPDATE
         @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
         public ResponseEntity<?> updateOffer(@PathVariable("id") long id,@Valid @RequestBody Offer offer) {
 

@@ -1,5 +1,6 @@
 package com.sweetcart.sweetcart.controller;
 
+import com.sweetcart.sweetcart.entity.CakeShop;
 import com.sweetcart.sweetcart.entity.Ingredient;
 import com.sweetcart.sweetcart.entity.Offer;
 import com.sweetcart.sweetcart.entity.Producer;
@@ -24,10 +25,16 @@ public class OfferController {
     @Autowired
     Producer producer;
 
-    @RequestMapping("/send")
-    public String sendMsg(@RequestParam("msg")String msg){
-        producer.produceMsg(msg);
-        return "USPJESNO";
+    @RequestMapping(method = RequestMethod.GET, value = "send/{offerId}")
+    public String sendMsg(@PathVariable Long offerId){
+
+        Optional<Offer> client = this.offerRepository.findById(offerId);
+        if (client == null) {
+            return "ne postoji";
+        }
+
+        producer.produceMsg(client.get());
+        return "uspješno";
     }
 
     private OfferRepository offerRepository;
@@ -93,6 +100,7 @@ public class OfferController {
         }
         offerRepository.save(offer);
 
+        sendMsg(offer.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/ingredients/{id}").buildAndExpand(offer.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +17,7 @@ import java.io.Serializable;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Offer.class)
 public class Offer implements Serializable{
 
     @Id
@@ -92,4 +96,20 @@ public class Offer implements Serializable{
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public String toString(){
+        JSONObject jsonInfo = new JSONObject();
+
+        try {
+            jsonInfo.put("id", this.id);
+            jsonInfo.put("name", this.name);
+            jsonInfo.put("category", this.category);
+            jsonInfo.put("avg_review", this.avg_review);
+            jsonInfo.put("price", this.price);
+            jsonInfo.put("cake_shopid", this.cake_shopid);
+
+        } catch (JSONException e1) {}
+        return jsonInfo.toString();
+    }
+
 }
