@@ -27,11 +27,21 @@ public class Offer {
     @Size(min=1, max=60, message = "size between 1 and 60")
     private String category;
 
-    @Size(min=1, max=10, message = "size between 1 and 10")
+    @NotNull(message = "Picture must be input")
+    @Size(min=1, max=1000, message = "size between 1 and 1000")
+    private String picture;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     private double avg_review;
 
     @NotNull(message = "Price must be input")
-    @Size(min=1, max=10, message = "size between 1 and 10")
     private double price;
 
     @ManyToOne(targetEntity = CakeShop.class)

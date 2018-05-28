@@ -43,6 +43,7 @@ public class IngredientController {
     }*/
 
     // GET ALL
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<Collection<Ingredient>> findAll() {
         Collection<Ingredient> clients = this.ingredientRepository.findAll();
@@ -53,6 +54,7 @@ public class IngredientController {
     }
 
     // RETRIEVE ONE
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/{ingredientId}")
     ResponseEntity<?> getIngredient (@PathVariable Long ingredientId) {
 
@@ -64,6 +66,7 @@ public class IngredientController {
     }
 
     //CREATE NEW
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> createClient(@Valid @RequestBody Ingredient ingredient, UriComponentsBuilder ucBuilder) {
 
@@ -85,6 +88,7 @@ public class IngredientController {
     }
 
     //EDIT
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> editIngredient(@PathVariable("id") long id, @Valid @RequestBody Ingredient ingredient) {
 
@@ -103,6 +107,7 @@ public class IngredientController {
     }
 
     //DELETE ONE
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteIngredient(@PathVariable("id") long id) {
 
@@ -116,6 +121,7 @@ public class IngredientController {
     }
 
     //DELETE ALL
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<Ingredient> deleteAll() {
 
