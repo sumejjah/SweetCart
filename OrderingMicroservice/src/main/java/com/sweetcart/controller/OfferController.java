@@ -48,6 +48,7 @@ public class OfferController {
         }*/
 
         // GET ALL OFFERS
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/all")
         public ResponseEntity<Collection<Offer>> findAll() {
             Collection<Offer> clients = this.offerRepository.findAll();
@@ -58,6 +59,7 @@ public class OfferController {
         }
 
         // RETRIEVE ONE OFFER
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/{clientId}")
         ResponseEntity<?> getOffer (@PathVariable Long clientId) {
 
@@ -69,6 +71,7 @@ public class OfferController {
         }
 
         //CREATE NEW OFFER
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/add", method = RequestMethod.POST)
         public ResponseEntity<?> createOffer(@Valid @RequestBody Offer offer, UriComponentsBuilder ucBuilder) {
 
@@ -89,6 +92,7 @@ public class OfferController {
             return new ResponseEntity<String>(headers, HttpStatus.CREATED);
         }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createOneOffer(@Valid @RequestBody Offer offer) {
 
@@ -109,6 +113,7 @@ public class OfferController {
     }
 
     //UPDATE
+    @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
         public ResponseEntity<?> updateOffer(@PathVariable("id") long id,@Valid @RequestBody Offer offer) {
 
@@ -124,12 +129,14 @@ public class OfferController {
             currentOffer.get().setCake_shopid(offer.getCake_shopid());
             currentOffer.get().setCategory(offer.getCategory());
             currentOffer.get().setPrice(offer.getPrice());
+        currentOffer.get().setPicture(offer.getPicture());
 
-            offerRepository.save(currentOffer.get());
+        offerRepository.save(currentOffer.get());
             return new ResponseEntity<Optional<Offer>>(currentOffer, HttpStatus.OK);
         }
 
         //DELETE ONE
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
         public ResponseEntity<?> deleteOffer(@PathVariable("id") long id) {
 
@@ -143,6 +150,7 @@ public class OfferController {
         }
 
         //DELETE ALL
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.DELETE)
         public ResponseEntity<Offer> deleteAll() {
 

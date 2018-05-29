@@ -30,6 +30,17 @@ public class Offer implements Serializable{
     @NotNull(message = "category must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements")
     private String category;
 
+    @NotNull(message = "category must be input") @Size(min = 2, max = 1000, message = "min 2, max 1000 elements")
+    private String picture;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @NotNull(message = "cake_shopid must be input")
     private long cake_shopid;
 

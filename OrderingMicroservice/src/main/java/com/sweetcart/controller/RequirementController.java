@@ -42,6 +42,7 @@ public class RequirementController {
     }*/
 
     // GET ALL OFFERS
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<Collection<Requirement>> findAll() {
         Collection<Requirement> requirements = this.requirementRepository.findAll();
@@ -52,6 +53,7 @@ public class RequirementController {
     }
 
     // RETRIEVE ONE OFFER
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/{requirementId}")
     ResponseEntity<?> getRequirement (@PathVariable Long requirementId) {
 
@@ -63,6 +65,7 @@ public class RequirementController {
     }
 
     //CREATE NEW OFFER
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> createRequirement(@Valid @RequestBody Requirement requirement, UriComponentsBuilder ucBuilder) {
 
@@ -74,6 +77,7 @@ public class RequirementController {
     }
 
     //UPDATE
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateRequirement(@PathVariable("id") long id,@Valid @RequestBody Requirement requirement) {
 
@@ -92,6 +96,7 @@ public class RequirementController {
     }
 
     //DELETE ONE
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteRequirement(@PathVariable("id") long id) {
 
@@ -105,6 +110,7 @@ public class RequirementController {
     }
 
     //DELETE ALL
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<Requirement> deleteAll() {
 

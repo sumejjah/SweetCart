@@ -25,6 +25,7 @@ public class OfferController {
     @Autowired
     Producer producer;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "send/{offerId}")
     public String sendMsg(@PathVariable Long offerId){
 
@@ -148,6 +149,7 @@ public class OfferController {
     }
 
     //DELETE ALL
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<Offer> deleteAll() {
 

@@ -68,6 +68,7 @@ public class ClientController {
         }
 
         // GET ALL CLIENTS
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/all")
         public ResponseEntity<Collection<Client>> findAll() {
             Collection<Client> clients = this.clientRepository.findAll();
@@ -78,6 +79,7 @@ public class ClientController {
         }
 
         // RETRIEVE ONE CLIENT
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/{clientId}")
         ResponseEntity<?> getClient (@PathVariable Long clientId) {
 
@@ -89,6 +91,7 @@ public class ClientController {
         }
 
         //CREATE NEW CLIENT
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/add", method = RequestMethod.POST)
         public ResponseEntity<?> createClient(@Valid @RequestBody Client client, UriComponentsBuilder ucBuilder) {
 
@@ -111,6 +114,7 @@ public class ClientController {
         }
 
         //UPDATE
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
         public ResponseEntity<?> updateClient(@PathVariable("id") long id,@Valid @RequestBody Client client) {
 
@@ -131,6 +135,7 @@ public class ClientController {
         }
 
         //DELETE ONE
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
         public ResponseEntity<?> deleteClient(@PathVariable("id") long id) {
 
@@ -144,6 +149,7 @@ public class ClientController {
         }
 
         //DELETE ALL
+        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.DELETE)
         public ResponseEntity<Client> deleteAll() {
 

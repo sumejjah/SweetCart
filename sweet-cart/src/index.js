@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from 'react-dom';
 import {render} from "react-dom";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
+import { Link } from 'react-router';
 
 import {Root} from "./components/Root";
 import {Home} from "./components/Home";
@@ -9,6 +10,8 @@ import {User} from "./components/User";
 import registerClient from "./components/RegisterClient";
 import RegisterCakeShop from "./components/RegisterCakeShop";
 import CreateOffer from './components/CreateOffer'
+import ShowOffer from './components/ShowOffer'
+
 
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,7 +27,9 @@ class App extends React.Component {
                     <Route path={"registerClient"} component={registerClient} />
                     <Route path={"registerCakeShop"} component={RegisterCakeShop} />
                     <Route exact path="/createOffer" component={CreateOffer} />
+                     <Route exact path="/showOffer" component={ShowOffer} />
                 </Route>
+
                 <Route path={"home-single"} component={Home}/>
             </Router>
         );
