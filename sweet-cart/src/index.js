@@ -12,6 +12,7 @@ import RegisterCakeShop from "./components/RegisterCakeShop";
 import CreateOffer from './components/CreateOffer'
 import ShowOffer from './components/ShowOffer'
 import EditOffer from './components/EditOffer'
+import OrderOffer from './components/OrderOffer'
 
 
 import registerServiceWorker from './registerServiceWorker';
@@ -30,6 +31,7 @@ class App extends React.Component {
                     <Route exact path="/createOffer" component={CreateOffer} />
                      <Route exact path="/showOffer" component={ShowOffer} />
                      <Route path='/editOffer/:id' component={EditOffer} />
+                     <Route path='/orderOffer/:id' component={OrderOffer} />
                 </Route>
 
                 <Route path={"home-single"} component={Home}/>

@@ -44,7 +44,7 @@ delete(id){
     else{
     return (
       <div className="App">
-      <ul>
+      <ul class="list">
       {offers.map(offer=>(
         <li key={offer.id}>
             <div class="card">
@@ -58,10 +58,12 @@ delete(id){
                      <div class="col-md-6">
                        <h4 class="card-title">{offer.name}</h4>
                        <p class="card-text">Price: {offer.price}km</p>
-                       <a href="#" class="card-link">Category: {offer.category}</a>
+                        <p class="card-text">Category: {offer.category}</p>
+                        <Link to={`/editOffer/${offer.id}`} className="btn btn-success">Edit</Link>&nbsp;
+                      <button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>
                        
-                      
                       </div>
+
                      <div class="col-md-2">
                          <div class="progress-circle p10">
                          <span>{offer.avg_review}</span>
@@ -73,8 +75,10 @@ delete(id){
                           </div>
                       </div>
                        <div class="col-md-2">
-                       <Link to={`/editOffer/${offer.id}`} className="btn btn-success">Edit</Link>&nbsp;
-                      <button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>
+                       
+
+                        <Link to={`/orderOffer/${offer.id}`} class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-ok"></span>Order</Link>&nbsp;
+                      
                         </div>
                   </div>
                 </div>

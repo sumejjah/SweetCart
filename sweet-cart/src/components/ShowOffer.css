@@ -184,3 +184,6 @@
     margin-right: auto;
    
 }
+.list{
+  list-style-type:none;
+}
