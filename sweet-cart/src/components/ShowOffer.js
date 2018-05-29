@@ -2,6 +2,7 @@ import './ShowOffer.css';
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
+import {Link} from "react-router";
 
 
 class ShowOffer extends Component{
@@ -38,7 +39,7 @@ delete(id){
   render(){
     var{isLoaded,offers}=this.state;
     if(!isLoaded){
-      return <div>Loading...</div>;
+      return <div>Loading...</div>
     }
     else{
     return (
@@ -58,7 +59,8 @@ delete(id){
                        <h4 class="card-title">{offer.name}</h4>
                        <p class="card-text">Price: {offer.price}km</p>
                        <a href="#" class="card-link">Category: {offer.category}</a>
-                       <a href="#" class="card-link">Edit</a>
+                       
+                      
                       </div>
                      <div class="col-md-2">
                          <div class="progress-circle p10">
@@ -71,8 +73,9 @@ delete(id){
                           </div>
                       </div>
                        <div class="col-md-2">
-<button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>
-</div>
+                       <Link to={`/editOffer/${offer.id}`} className="btn btn-success">Edit</Link>&nbsp;
+                      <button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>
+                        </div>
                   </div>
                 </div>
             </div>
