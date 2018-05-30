@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private UserRepository userRepository;
 
@@ -43,7 +44,6 @@ public class UserController {
     }
 
     // RETRIEVE ONE USER
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
     ResponseEntity<?> getUser (@PathVariable Long userId) {
 
@@ -53,8 +53,8 @@ public class UserController {
         }
         return new ResponseEntity<Optional<User>>(user, HttpStatus.OK);
     }
+
     //CREATE NEW USER
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@Valid @RequestBody User user, UriComponentsBuilder ucBuilder) {
 
@@ -77,7 +77,6 @@ public class UserController {
     }
 
     // RETRIEVE ONE USER BY NAME
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/name/{userName}")
     ResponseEntity<?> getUserByName (@PathVariable String userName) {
 
@@ -139,15 +138,5 @@ public class UserController {
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 
-    /*@RequestMapping(value="/add", method=RequestMethod.POST)
-    public void addUser(@RequestBody AddUserRequest addUserRequest){
-        User user=new User();
-        user.setUsername(addUserRequest.getUsername());
-        user.setPassword(addUserRequest.getPassword());
-        user.setRoleId(addUserRequest.getRoleId());
-        userRepository.save(user);
-
-    }
-*/
 
 }

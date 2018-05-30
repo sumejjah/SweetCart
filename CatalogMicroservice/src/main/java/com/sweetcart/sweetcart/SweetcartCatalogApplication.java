@@ -26,10 +26,10 @@ public class SweetcartCatalogApplication {
 
 	}
 
-	@Bean
+	/*@Bean
 	public  CakeShopController  cakeShopController()
 	{
 		return  new CakeShopController();
-	}
+	}*/
 
 }

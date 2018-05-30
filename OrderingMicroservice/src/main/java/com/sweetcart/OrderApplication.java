@@ -30,11 +30,11 @@ public class OrderApplication {
 
 	}
 
-	@Bean
-	public  ClientController  clientController()
+	//@Bean
+	/*public  ClientController  clientController()
 	{
 		return  new ClientController();
-	}
+	}*/
 
 	@Bean(name = "messageSource")
 	public ReloadableResourceBundleMessageSource messageSource() {

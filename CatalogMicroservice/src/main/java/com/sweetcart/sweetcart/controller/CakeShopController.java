@@ -3,6 +3,7 @@ package com.sweetcart.sweetcart.controller;
 import com.sweetcart.sweetcart.entity.CakeShop;
 import com.sweetcart.sweetcart.entity.Request.AddCakeShopRequest;
 import com.sweetcart.sweetcart.repository.CakeShopRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cakeshops")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class CakeShopController {
 
     public CakeShopController(){}
@@ -28,14 +30,16 @@ public class CakeShopController {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    public void getCakeShops() throws RestClientException, IOException {
+
+    @RequestMapping(method = RequestMethod.GET, value = "addCakeShop/{cake_shopId}")
+    public void addCakeShop(@PathVariable Long cake_shopId) throws RestClientException, IOException {
 
         List<ServiceInstance> instances=discoveryClient.getInstances("IdentifyMicroservice-service-client");
         ServiceInstance serviceInstance=instances.get(0);
 
         String baseUrl=serviceInstance.getUri().toString();
 
-        baseUrl=baseUrl+"/cakeshops/all";
+        baseUrl=baseUrl+"/cakeshops/" + cake_shopId.toString();
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response=null;
@@ -46,7 +50,29 @@ public class CakeShopController {
         {
             System.out.println(ex);
         }
-        System.out.println(response.getBody());
+        String dobiveni = response.getBody();
+        JSONObject jsonObject = new JSONObject(dobiveni);
+        Iterator<String> it = jsonObject.keys();
+        CakeShop cakeShop = new CakeShop();
+
+        while(it.hasNext()){
+            String key = it.next();
+            if(key.equals("name"))
+                cakeShop.setName(jsonObject.getString("name"));
+            else if(key.equals("address"))
+                cakeShop.setAddress(jsonObject.getString("address"));
+            else if(key.equals("id"))
+                cakeShop.setId(jsonObject.getLong("id"));
+            else if(key.equals("description"))
+                cakeShop.setDescription(jsonObject.getString("description"));
+            else if (key.equals("userId")){
+                JSONObject sub = (JSONObject) jsonObject.get(key);
+                cakeShop.setUserId(sub.getLong("id"));
+            }
+
+        }
+
+        createCakeShopIdentify(cakeShop);
     }
 
     private static HttpEntity<?> getHeaders() throws IOException {
@@ -62,24 +88,7 @@ public class CakeShopController {
     @Autowired
     public CakeShopController(CakeShopRepository cakeShopRepository) {
         this.cakeShopRepository = cakeShopRepository;
-    }/*
-    @RequestMapping(value="/all",method= RequestMethod.GET)
-    public List<CakeShop> findAllCakeShops(){
-        return cakeShopRepository.findAll();
     }
-
-    //ADD
-    @RequestMapping(value="/add", method=RequestMethod.POST)
-    public void addCakeShop(@RequestBody AddCakeShopRequest addCakeShopRequest){
-        CakeShop cakeShop=new CakeShop();
-        cakeShop.setName(addCakeShopRequest.getName());
-        cakeShop.setAddress(addCakeShopRequest.getAddress());
-        cakeShop.setDescription(addCakeShopRequest.getDescription());
-        cakeShop.setUserId(addCakeShopRequest.getUserId());
-
-        cakeShopRepository.save(cakeShop);
-
-    }*/
 
     //ALL
     @RequestMapping(method = RequestMethod.GET, value = "/all")
@@ -100,6 +109,29 @@ public class CakeShopController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Optional<CakeShop>>(cakeShop, HttpStatus.OK);
+    }
+
+    // RETRIEVE ONE CAKE SHOP BY NAME
+    @RequestMapping(method = RequestMethod.DELETE, value = "/name/{userName}")
+    ResponseEntity<?> deleteByName (@PathVariable String userName) {
+
+        Collection<CakeShop> cakeShops = this.cakeShopRepository.findAll();
+        CakeShop cakeShop = new CakeShop();
+        boolean exists = false;
+        for (CakeShop u: cakeShops) {
+            if(u.getName().equals(userName)){
+                exists = true;
+                cakeShop = u;
+            }
+        }
+
+        if (!exists) {
+            return new ResponseEntity(new CustomErrorType("Unable to delete. CakeShop with name " + userName + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+
+        cakeShopRepository.deleteById(cakeShop.getId());
+        return new ResponseEntity<CakeShop>(HttpStatus.NO_CONTENT);
     }
 
     //CREATE NEW
@@ -142,6 +174,25 @@ public class CakeShopController {
 
         cakeShopRepository.save(currentCakeShop.get());
         return new ResponseEntity<Optional<CakeShop>>(currentCakeShop, HttpStatus.OK);
+    }
+
+    //CREATE NEW CLIENT - samo za komunikaciju između identify i order
+    @RequestMapping(value = "/addNew", method = RequestMethod.POST)
+    public boolean createCakeShopIdentify(CakeShop cakeShop) {
+
+        Collection<CakeShop> cakeShops = this.cakeShopRepository.findAll();
+        boolean exists = false;
+        for (Iterator<CakeShop> i = cakeShops.iterator(); i.hasNext();) {
+            if(i.next().getName().equals(cakeShop.getName()))
+                exists = true;
+        }
+
+        if (exists) {
+            return false;
+        }
+        cakeShopRepository.save(cakeShop);
+
+        return true;
     }
 
     //DELETE ONE

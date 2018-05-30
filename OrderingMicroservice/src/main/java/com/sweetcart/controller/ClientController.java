@@ -6,6 +6,7 @@ import com.sweetcart.entity.request.AddClientRequest;
 import com.sweetcart.entity.request.AddOrderRequest;
 import com.sweetcart.repository.ClientRepository;
 import com.sweetcart.repository.OrdersRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/client")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class ClientController {
 
         public ClientController(){}
@@ -33,28 +35,54 @@ public class ClientController {
         @Autowired
         private DiscoveryClient discoveryClient;
 
-        public void getUsers() throws RestClientException, IOException {
 
-            List<ServiceInstance> instances=discoveryClient.getInstances("IdentifyMicroservice-service-client");
-            ServiceInstance serviceInstance=instances.get(0);
+    @RequestMapping(method = RequestMethod.GET, value = "addClient/{clientId}")
+    public void getUsers(@PathVariable Long clientId) throws RestClientException, IOException {
 
-            String baseUrl=serviceInstance.getUri().toString();
+        List<ServiceInstance> instances=discoveryClient.getInstances("IdentifyMicroservice-service-client");
+        ServiceInstance serviceInstance=instances.get(0);
 
-            baseUrl=baseUrl+"/users/all";
+        String baseUrl=serviceInstance.getUri().toString();
 
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response=null;
-            try{
-                response=restTemplate.exchange(baseUrl,
-                        HttpMethod.GET, getHeaders(),String.class);
-            }catch (Exception ex)
-            {
-                System.out.println(ex);
+        baseUrl=baseUrl+"/clients/" + clientId.toString();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> response=null;
+        try{
+            response=restTemplate.exchange(baseUrl,
+                    HttpMethod.GET, getHeaders(),String.class);
+        }catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
+        String dobiveni = response.getBody();
+        JSONObject jsonObject = new JSONObject(dobiveni);
+        Iterator<String> it = jsonObject.keys();
+        Client client = new Client();
+
+        while(it.hasNext()){
+            String key = it.next();
+            if(key.equals("firstName"))
+                client.setFirstName(jsonObject.getString("firstName"));
+            else if(key.equals("lastName"))
+                client.setLastName(jsonObject.getString("lastName"));
+            else if(key.equals("id"))
+                client.setId(jsonObject.getLong("id"));
+            else if(key.equals("bonus"))
+                client.setBonus(jsonObject.getInt("bonus"));
+            else if (key.equals("userId")){
+                JSONObject sub = (JSONObject) jsonObject.get(key);
+                client.setUserid(sub.getLong("id"));
             }
-            System.out.println(response.getBody());
+
         }
 
-        private static HttpEntity<?> getHeaders() throws IOException {
+        createClientIdentify(client);
+        //System.out.println(response.getBody());
+    }
+
+    private static HttpEntity<?> getHeaders() throws IOException {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
             return new HttpEntity<>(headers);
@@ -68,7 +96,6 @@ public class ClientController {
         }
 
         // GET ALL CLIENTS
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/all")
         public ResponseEntity<Collection<Client>> findAll() {
             Collection<Client> clients = this.clientRepository.findAll();
@@ -79,7 +106,6 @@ public class ClientController {
         }
 
         // RETRIEVE ONE CLIENT
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/{clientId}")
         ResponseEntity<?> getClient (@PathVariable Long clientId) {
 
@@ -91,7 +117,6 @@ public class ClientController {
         }
 
         //CREATE NEW CLIENT
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/add", method = RequestMethod.POST)
         public ResponseEntity<?> createClient(@Valid @RequestBody Client client, UriComponentsBuilder ucBuilder) {
 
@@ -100,7 +125,6 @@ public class ClientController {
             for (Iterator<Client> i = clients.iterator(); i.hasNext();) {
                 if(i.next().getFirstName().equals(client.getFirstName()))
                     exists = true;
-                int x = 5;
             }
 
             if (exists) {
@@ -113,8 +137,27 @@ public class ClientController {
             return new ResponseEntity<String>(headers, HttpStatus.CREATED);
         }
 
+        //CREATE NEW CLIENT - samo za komunikaciju između identify i order
+        @RequestMapping(value = "/addNew", method = RequestMethod.POST)
+        public boolean createClientIdentify(Client client) {
+
+            Collection<Client> clients = this.clientRepository.findAll();
+            boolean exists = false;
+            for (Iterator<Client> i = clients.iterator(); i.hasNext();) {
+                if(i.next().getFirstName().equals(client.getFirstName()))
+                    exists = true;
+            }
+
+            if (exists) {
+                return false;
+            }
+            clientRepository.save(client);
+
+            return true;
+        }
+
+
         //UPDATE
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
         public ResponseEntity<?> updateClient(@PathVariable("id") long id,@Valid @RequestBody Client client) {
 
@@ -134,8 +177,31 @@ public class ClientController {
             return new ResponseEntity<Optional<Client>>(currentClient, HttpStatus.OK);
         }
 
+        // RETRIEVE ONE CLIENT BY NAME
+        @RequestMapping(method = RequestMethod.DELETE, value = "/name/{userName}")
+        ResponseEntity<?> deleteByName (@PathVariable String userName) {
+
+            Collection<Client> clients = this.clientRepository.findAll();
+            Client client = new Client();
+            boolean exists = false;
+            for (Client u: clients) {
+                if(u.getFirstName().equals(userName)){
+                    exists = true;
+                    client = u;
+                }
+            }
+
+            if (!exists) {
+                return new ResponseEntity(new CustomErrorType("Unable to delete. CakeShop with name " + userName + " not found."),
+                        HttpStatus.NOT_FOUND);
+            }
+
+            clientRepository.deleteById(client.getId());
+            return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);
+        }
+
+
         //DELETE ONE
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
         public ResponseEntity<?> deleteClient(@PathVariable("id") long id) {
 
@@ -149,7 +215,6 @@ public class ClientController {
         }
 
         //DELETE ALL
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.DELETE)
         public ResponseEntity<Client> deleteAll() {
 
