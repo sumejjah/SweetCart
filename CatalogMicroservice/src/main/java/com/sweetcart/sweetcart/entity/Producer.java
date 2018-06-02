@@ -20,8 +20,8 @@ public class Producer {
     @Value("${jsa.rabbitmq.routingkey}")
     private String routingKey;
 
-    public void produceMsg(Offer offer){
+    public void produceMsg(String offer){
         amqpTemplate.convertAndSend(exchange, routingKey, offer);
-        System.out.println("Send msg = " + offer.toString());
+        System.out.println("Send msg = " + offer);
     }
 }

@@ -1,19 +1,27 @@
 package com.sweetcart.controller;
 
+import com.sweetcart.entity.Client;
 import com.sweetcart.entity.Offer;
 import com.sweetcart.entity.Orders;
 import com.sweetcart.entity.request.AddOfferRequest;
 import com.sweetcart.entity.request.AddOrderRequest;
 import com.sweetcart.repository.OfferRepository;
 import com.sweetcart.repository.OrdersRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +29,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/offer")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OfferController {
 
         private OfferRepository offerRepository;
@@ -30,25 +39,7 @@ public class OfferController {
             this.offerRepository = offerRepository;
         }
 
-        /*@RequestMapping(value = "/all", method = RequestMethod.GET)
-        public List<Offer> findAll(){
-            return offerRepository.findAll();
-        }
-
-        @RequestMapping(value = "/add", method = RequestMethod.POST)
-        public void addOffer(@RequestBody AddOfferRequest addOfferRequest){
-            Offer offer= new Offer();
-            offer.setName(addOfferRequest.getName());
-            offer.setAvg_review(addOfferRequest.getAvg_review());
-            offer.setCategory(addOfferRequest.getCategory());
-            offer.setPrice(addOfferRequest.getPrice());
-            offer.setCake_shopid(addOfferRequest.getCake_shopid());
-
-            offerRepository.save(offer);
-        }*/
-
         // GET ALL OFFERS
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/all")
         public ResponseEntity<Collection<Offer>> findAll() {
             Collection<Offer> clients = this.offerRepository.findAll();
@@ -59,7 +50,6 @@ public class OfferController {
         }
 
         // RETRIEVE ONE OFFER
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.GET, value = "/{clientId}")
         ResponseEntity<?> getOffer (@PathVariable Long clientId) {
 
@@ -71,7 +61,6 @@ public class OfferController {
         }
 
         //CREATE NEW OFFER
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/add", method = RequestMethod.POST)
         public ResponseEntity<?> createOffer(@Valid @RequestBody Offer offer, UriComponentsBuilder ucBuilder) {
 
@@ -92,7 +81,6 @@ public class OfferController {
             return new ResponseEntity<String>(headers, HttpStatus.CREATED);
         }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createOneOffer(@Valid @RequestBody Offer offer) {
 
@@ -113,7 +101,6 @@ public class OfferController {
     }
 
     //UPDATE
-    @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
         public ResponseEntity<?> updateOffer(@PathVariable("id") long id,@Valid @RequestBody Offer offer) {
 
@@ -136,7 +123,6 @@ public class OfferController {
         }
 
         //DELETE ONE
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
         public ResponseEntity<?> deleteOffer(@PathVariable("id") long id) {
 
@@ -150,13 +136,38 @@ public class OfferController {
         }
 
         //DELETE ALL
-        @CrossOrigin(origins = "http://localhost:3000")
         @RequestMapping(method = RequestMethod.DELETE)
         public ResponseEntity<Offer> deleteAll() {
 
             offerRepository.deleteAll();
             return new ResponseEntity<Offer>(HttpStatus.NO_CONTENT);
         }
+
+        //DELETE BY NAME
+        @RequestMapping(method = RequestMethod.DELETE, value = "/name/{userName}")
+        ResponseEntity<?> deleteByName (@PathVariable String userName) {
+
+            Collection<Offer> offers = this.offerRepository.findAll();
+            Offer offer = new Offer();
+            boolean exists = false;
+            for (Offer u: offers) {
+                if(u.getName().equals(userName)){
+                    exists = true;
+                    offer = u;
+                }
+            }
+
+            if (!exists) {
+                return new ResponseEntity(new CustomErrorType("Unable to delete. Offer with name " + userName + " not found."),
+                        HttpStatus.NOT_FOUND);
+            }
+
+            offerRepository.deleteById(offer.getId());
+            return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);
+        }
+
+
+
 
 
 }
