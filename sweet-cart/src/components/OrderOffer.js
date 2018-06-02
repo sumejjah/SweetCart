@@ -1,75 +1,112 @@
 import React, { Component } from 'react';
-import './ShowOffer.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import axios from 'axios';
-import { Link } from 'react-router';
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
 
-class EditOffer extends Component {
-
-  constructor(props) {
+class OrderOffer extends Component {
+  constructor(props){
     super(props);
-    this.state = {
-      offer: {}
-    };
-  }
-
-  componentDidMount() {
-    axios.get('http://localhost:8079/api/catalog/offers/'+this.props.params.id)
-      .then(res => {
-        this.setState({ offer: res.data });
-        console.log(this.state.offer);
-      });
-  }
-
-  onChange = (e) => {
+    this.state={
+      adress:'',
+      telephone:''
     
+      
+    }
   }
 
-  onSubmit = (e) => {
-   
+  componentWillReceiveProps(nextProps){
+    console.log("nextProps",nextProps);
   }
+  handleClick(event,role){
+    var apiBaseUrl = "http://localhost:8079/api/ordering/orders/add";
+    var self = this;
+    var offer_id=this.props.params.id;
+    if(this.state.adress.length>0 && this.state.telephone.length>0 ){
+      var payload={
+      
+      "adress": this.state.adress,
+      "telephone":this.state.telephone,
+      "client":{"id": 2},
+      "offer":{"id": offer_id}
+      
+      }
+
+
+
+      axios.post(apiBaseUrl, payload).then(function (response) {
+       if(response.status == 201){
+        console.log("You order was successfull");
+      
+
+        //browserHistory.push("/showOffer/")
+
+         }
+         
+        
+       
+       else{
+         console.log("some error ocurred",response.data.code);
+         //browserHistory.push("/showOffer/")
+       }
+     })
+     .catch(function (error) {
+       console.log(payload);
+        alert("You order was successfull");
+         
+              // browserHistory.push("/showOffer/")
+     });
+     
+    }
+    else{
+      alert("Input field value is missing");
+    }
+
+  }  
 
   render() {
     return (
-
-
-
-
-
-
-
-      <div class="card">
+      <div>
+        <MuiThemeProvider>
+        <div class="row">
+         <div class="card">
         <div class="card-body">
-           <h4><Link to={`/showOffer`}><span class="glyphicon glyphicon-arrow-left"aria-hidden="true"></span>Back</Link></h4>
-            <img class="img-fluid center" src={this.state.offer.picture} alt="Chania"/>
+         <div class="panel-body">
+<div class="col-md-12 col-xs-12">
+          <div>
+           <TextField
+             hintText="Enter address"
+             floatingLabelText="Address"
+             onChange = {(event,newValue) => this.setState({adress:newValue})}
+             />
+           <br/>
+           <TextField
+             hintText="Enter phone"
+             floatingLabelText="Phone"
+             onChange = {(event,newValue) => this.setState({telephone:newValue})}
+             />
+           <br/>
+          
+           <RaisedButton label="Add" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
           </div>
-          <div class="panel-body">
-          
-            
-            <form onSubmit={this.onSubmit}>
-              <div class="form-group">
+          </div>
 
-<h4 class="card-title">{this.state.offer.name}</h4>
-                       <p class="card-text">Price: {this.state.offer.price}km</p>
-                       
-
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" address="address" onChange = {(event,newValue) => this.setState({adress:newValue})} placeholder="Address" />
-                 
-                <label for="telephone">Phone:</label>
-                <input type="text" class="form-control" telephone="telephone" onChange = {(event,newValue) => this.setState({telephone:newValue})} placeholder="Phone" />
-                
-               
-              </div>
-             
-              <button type="submit" class="btn btn-success">Order</button>
-            </form>
           
-       </div>
+          </div>
+         </div>
+         </div>
+         </div>
+         </MuiThemeProvider>
+
       </div>
-    
     );
   }
 }
 
-export default EditOffer;
+const style = {
+  margin: 15,
+};
+
+export default OrderOffer;

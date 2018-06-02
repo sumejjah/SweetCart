@@ -43,28 +43,25 @@ delete(id){
     }
     else{
     return (
-      <div className="App">
+     
+      <div class="App">
       <ul class="list">
+      
+        <div class="card-group">
       {offers.map(offer=>(
         <li key={offer.id}>
-            <div class="card">
+        <div class="card bg-light" >
+           <img class="img-top" src={offer.picture} onError={(e)=>{e.target.src="https://www.logocowboy.com/wp-content/uploads/2016/06/sweet-cart.png"}} alt="Chania"/>
               <div class="card-body">
+              
+                    
                  <div class="row">
-                    <div class="col-md-2">
-                       <img class="img-fluid" src={offer.picture} alt="Chania"/>
-                      
-                   </div>
-                 
                      <div class="col-md-6">
                        <h4 class="card-title">{offer.name}</h4>
                        <p class="card-text">Price: {offer.price}km</p>
                         <p class="card-text">Category: {offer.category}</p>
-                        <Link to={`/editOffer/${offer.id}`} className="btn btn-success">Edit</Link>&nbsp;
-                      <button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>
-                       
-                      </div>
-
-                     <div class="col-md-2">
+                  </div>
+                  <div class="col-md-6">
                          <div class="progress-circle p10">
                          <span>{offer.avg_review}</span>
                              <div class="left-half-clipper">
@@ -73,22 +70,32 @@ delete(id){
                                  
                              </div>
                           </div>
-                      </div>
-                       <div class="col-md-2">
+                          </div>
+                    </div>
+                        <Link to={`/editOffer/${offer.id}`} className="btn btn-success">Edit</Link>&nbsp;
+                      <button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>&nbsp;
                        
-
                         <Link to={`/orderOffer/${offer.id}`} class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-ok"></span>Order</Link>&nbsp;
                       
-                        </div>
-                  </div>
-                </div>
-            </div>
- 
+                      
 
+                    
+                    
+                     
+                       
+
+               
+                </div>
+          
+ 
+ </div>
       </li>
         ))};
+          </div> 
+         
       </ul>
-      </div>
+    </div>
+      
       );
     }
   }

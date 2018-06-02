@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import {Router, Route, browserHistory, IndexRoute} from "react-router";
 
 class CreateOffer extends Component {
   constructor(props){
@@ -16,6 +17,7 @@ class CreateOffer extends Component {
       
     }
   }
+
   componentWillReceiveProps(nextProps){
     console.log("nextProps",nextProps);
   }
@@ -24,7 +26,7 @@ class CreateOffer extends Component {
     var self = this;
     if(this.state.name.length>0 && this.state.category.length>0 && this.state.price.length>0 && this.state.picture.length>0 ){
       var payload={
-      "id": '',
+      
       "name": this.state.name,
       "avg_review":0,
       "category":this.state.category,
@@ -39,7 +41,7 @@ class CreateOffer extends Component {
        if(response.status == 201){
         console.log("offer added successfull");
 
-        
+        browserHistory.push("/showOffer/")
 
          }
          
@@ -47,10 +49,13 @@ class CreateOffer extends Component {
        
        else{
          console.log("some error ocurred",response.data.code);
+         browserHistory.push("/showOffer/")
        }
      })
      .catch(function (error) {
-       console.log(error);
+       console.log(payload);
+        alert("Successfully added");
+       browserHistory.push("/showOffer/")
      });
      
     }
@@ -64,36 +69,51 @@ class CreateOffer extends Component {
     return (
       <div>
         <MuiThemeProvider>
+        <div class="row">
+         <div class="card">
+        <div class="card-body">
+         <div class="panel-body">
+<div class="col-md-6 col-xs-12">
           <div>
            <TextField
-             hintText="Enter Cakes category"
-             floatingLabelText="Cake Name"
+             hintText="Enter name"
+             floatingLabelText="Name"
              onChange = {(event,newValue) => this.setState({name:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter Cakes category"
-             floatingLabelText="Cake category"
+             hintText="Enter category"
+             floatingLabelText="Category"
              onChange = {(event,newValue) => this.setState({category:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter Cakes price"
-             floatingLabelText="Cake price"
+             hintText="Enter price"
+             floatingLabelText="Price"
              onChange = {(event,newValue) => this.setState({price:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter Cakes picture"
-             floatingLabelText="Cake picture"
+             hintText="Enter url of picture"
+             floatingLabelText="Url picture"
              onChange = {(event,newValue) => this.setState({picture:newValue})}
              />
            <br/>
            
           
-           <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
+           <RaisedButton label="Add" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
           </div>
+          </div>
+
+          <div class="col-md-6 col-xs-12">
+           <img id="foo" class="img-fluid center" src={this.state.picture} onError={(e)=>{e.target.src="https://www.logocowboy.com/wp-content/uploads/2016/06/sweet-cart.png"}}/>
+          </div>
+          </div>
+         </div>
+         </div>
+         </div>
          </MuiThemeProvider>
+
       </div>
     );
   }
