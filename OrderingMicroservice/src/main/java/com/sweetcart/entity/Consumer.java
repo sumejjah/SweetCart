@@ -2,6 +2,7 @@ package com.sweetcart.entity;
 
 import com.sweetcart.controller.CustomErrorType;
 import com.sweetcart.repository.OfferRepository;
+import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,23 +28,32 @@ public class Consumer {
     private OfferController offerController = new OfferController(offerRepository);
 
     @RabbitListener(queues="${jsa.rabbitmq.queue}")
-    public void recievedMessage(Offer offer) {
+    public void recievedMessage(String offer) {
 
-        System.out.println("Dobiveni id: " + offer.getCake_shopid());
+        String dobiveni = offer;
+        JSONObject jsonObject = new JSONObject(dobiveni);
+        Iterator<String> it = jsonObject.keys();
+        Offer offerNew = new Offer();
 
-        Long broj = Long.valueOf(1);
-        offer.setCake_shopid(broj);
+        while(it.hasNext()){
+            String key = it.next();
+            if(key.equals("name"))
+                offerNew.setName(jsonObject.getString("name"));
+            else if(key.equals("category"))
+                offerNew.setCategory(jsonObject.getString("category"));
+            else if(key.equals("picture"))
+                offerNew.setPicture(jsonObject.getString("picture"));
+            else if(key.equals("cake_shopid"))
+                offerNew.setCake_shopid(jsonObject.getLong("cake_shopid"));
+            else if(key.equals("avg_review"))
+                offerNew.setAvg_review(jsonObject.getDouble("avg_review"));
+            else if(key.equals("price"))
+                offerNew.setPrice(jsonObject.getDouble("price"));
 
 
-        //offerRepository.save(offer);
-        //System.out.println(offer.getCake_shopid());
-        //System.out.println(offer.getCategory());
-        //System.out.println(offer.getName());
-        //System.out.println(offer.getPrice());
+            }
+        //System.out.println("novi json" + offerNew.toString());
 
-        offerController.createOneOffer(offer);
-
-        System.out.println("Recieved Message: " + offer.toString());
-
+        offerController.createOneOffer(offerNew);
     }
 }

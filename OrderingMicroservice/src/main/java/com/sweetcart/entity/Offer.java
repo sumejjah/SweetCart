@@ -118,6 +118,7 @@ public class Offer implements Serializable{
             jsonInfo.put("avg_review", this.avg_review);
             jsonInfo.put("price", this.price);
             jsonInfo.put("cake_shopid", this.cake_shopid);
+            jsonInfo.put("picture", this.picture);
 
         } catch (JSONException e1) {}
         return jsonInfo.toString();
