@@ -17,8 +17,11 @@ public class Requirement implements Serializable {
     @NotNull
     private boolean confirmed;
 
-    @ManyToMany(mappedBy = "requirements")
-    private Set<Orders> orders;
+
+
+    @ManyToOne(targetEntity = Orders.class)
+    @JoinColumn(name = "orders_id")
+    private Orders ordersId;
 
 
     public long getId() {
@@ -37,12 +40,12 @@ public class Requirement implements Serializable {
         this.confirmed = confirmed;
     }
 
-    public Set<Orders> getOrders() {
-        return orders;
+    public Orders getOrdersId() {
+        return ordersId;
     }
 
-    public void setOrders(Set<Orders> orders) {
-        this.orders = orders;
+    public void setOrdersId(Orders ordersId) {
+        this.ordersId = ordersId;
     }
 
 }

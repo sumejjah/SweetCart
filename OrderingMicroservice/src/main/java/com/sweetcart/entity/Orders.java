@@ -30,15 +30,6 @@ public class Orders implements Serializable{
     @JoinColumn(name="offer_id")
     private Offer offer;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "orders_requirement",
-            joinColumns = @JoinColumn(name = "orders_id"),
-            inverseJoinColumns = @JoinColumn(name = "requirement_id")    )
-    private Set<Requirement> requirements;
-
     public Orders() {
     }
 
@@ -48,7 +39,6 @@ public class Orders implements Serializable{
         this.telephone = telephone;
         this.client = client;
         this.offer = offer;
-        this.requirements=requirements;
     }
 
     public long getId() {
@@ -91,11 +81,4 @@ public class Orders implements Serializable{
     }
 
 
-    public Set<Requirement> getRequirements() {
-        return requirements;
-    }
-
-    public void setRequirements(Set<Requirement> requirements) {
-        this.requirements = requirements;
-    }
 }

@@ -95,8 +95,6 @@ public class OrdersController {
         currentOrder.get().setAdress(orders.getAdress());
         currentOrder.get().setClient(orders.getClient());
         currentOrder.get().setOffer(orders.getOffer());
-        //PROVJERITI DA LI TREBA OVA LINIJA
-        currentOrder.get().setRequirements(orders.getRequirements());
 
         ordersRepository.save(currentOrder.get());
         return new ResponseEntity<Optional<Orders>>(currentOrder, HttpStatus.OK);

@@ -90,7 +90,7 @@ public class RequirementController {
         }
 
         currentRequirement.get().setConfirmed(requirement.isConfirmed());
-        currentRequirement.get().setOrders(requirement.getOrders());
+        currentRequirement.get().setOrdersId(requirement.getOrdersId());
 
         requirementRepository.save(currentRequirement.get());
         return new ResponseEntity<Optional<Requirement>>(currentRequirement, HttpStatus.OK);
