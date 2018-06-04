@@ -22,6 +22,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping(value = "/orders")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrdersController {
 
     private OrdersRepository ordersRepository;
@@ -48,7 +49,6 @@ public class OrdersController {
     }*/
 
     // GET ALL ORDERS
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<Collection<Orders>> findAll() {
         Collection<Orders> orders = this.ordersRepository.findAll();
@@ -59,7 +59,6 @@ public class OrdersController {
     }
 
     // RETRIEVE ONE ORDER
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/{orderId}")
     ResponseEntity<?> getOrder (@PathVariable Long orderId) {
 
@@ -71,7 +70,6 @@ public class OrdersController {
     }
 
     //CREATE NEW ORDER
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> createOrder(@Valid @RequestBody Orders orders, UriComponentsBuilder ucBuilder) {
 
@@ -83,7 +81,6 @@ public class OrdersController {
     }
 
     //UPDATE
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateOrder(@PathVariable("id") long id,@Valid @RequestBody Orders orders) {
 
@@ -104,7 +101,6 @@ public class OrdersController {
     }
 
     //DELETE ONE
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteOrder(@PathVariable("id") long id) {
 

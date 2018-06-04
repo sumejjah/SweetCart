@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/requirement")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RequirementController {
     private RequirementRepository requirementRepository;
 
