@@ -13,7 +13,8 @@ import CreateOffer from './components/CreateOffer'
 import ShowOffer from './components/ShowOffer'
 import EditOffer from './components/EditOffer'
 import OrderOffer from './components/OrderOffer'
-
+import ShowRequirements from './components/ShowRequirements'
+import ShowConfirmedRequirements from './components/ShowConfirmedRequirements'
 
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,6 +33,8 @@ class App extends React.Component {
                      <Route exact path="/showOffer" component={ShowOffer} />
                      <Route path='/editOffer/:id' component={EditOffer} />
                      <Route path='/orderOffer/:id' component={OrderOffer} />
+                     <Route exact path="/showRequirements" component={ShowRequirements} />
+                     <Route exact path="/showConfirmedRequirements" component={ShowConfirmedRequirements} />
                 </Route>
 
                 <Route path={"home-single"} component={Home}/>

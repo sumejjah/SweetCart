@@ -22,10 +22,18 @@ export const Header = (props) => {
             <li className="nav-item">
               <a className="nav-link" href="#"><Link to={"/createOffer"} activeClassName={"active"}>Create Offer</Link></a>
             </li>
-             <li className="nav-item">
+            
+            <li className="nav-item">
               <a className="nav-link" href="#"><Link to={"/showOffer"} activeClassName={"active"}>Show Offer</Link></a>
             </li>
+            
+            <li className="nav-item">
+              <a className="nav-link" href="#"><Link to={"/showRequirements"} activeClassName={"active"}>Show Requirements</Link></a>
+            </li>
 
+            <li className="nav-item">
+              <a className="nav-link" href="#"><Link to={"/showConfirmedRequirements"} activeClassName={"active"}>Show Confirmed Requirements</Link></a>
+            </li>
 
           </ul>
           <form className="form-inline my-2 my-lg-0">
