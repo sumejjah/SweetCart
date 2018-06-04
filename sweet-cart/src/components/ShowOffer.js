@@ -60,6 +60,7 @@ delete(id){
                        <h4 class="card-title">{offer.name}</h4>
                        <p class="card-text">Price: {offer.price}km</p>
                         <p class="card-text">Category: {offer.category}</p>
+                         <p class="card-text">Description: {offer.description}</p>
                   </div>
                   <div class="col-md-6">
                          <div class="progress-circle p10">

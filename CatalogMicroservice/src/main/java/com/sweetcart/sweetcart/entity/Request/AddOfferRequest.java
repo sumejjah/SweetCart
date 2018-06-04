@@ -7,6 +7,15 @@ public class AddOfferRequest {
     private String category;
 
     private String picture;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getPicture() {
         return picture;

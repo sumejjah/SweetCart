@@ -13,7 +13,8 @@ class CreateOffer extends Component {
       name:'',
       category:'',
       price:'',
-      picture:''
+      picture:'',
+      description:''
       
     }
   }
@@ -24,24 +25,25 @@ class CreateOffer extends Component {
   handleClick(event,role){
     var apiBaseUrl = "http://localhost:8079/api/catalog/offers/add";
     var self = this;
-    if(this.state.name.length>0 && this.state.category.length>0 && this.state.price.length>0 && this.state.picture.length>0 ){
+    if(this.state.name.length>0 && this.state.description.length>0 &&this.state.category.length>0 && this.state.price.length>0 && this.state.picture.length>0 ){
       var payload={
       
       "name": this.state.name,
       "avg_review":0,
       "category":this.state.category,
       "price": this.state.price,
+       "description": this.state.description,
       "picture": this.state.picture,
       "cakeShopId":{"id": 1}
       
       }
 
-
-      axios.post(apiBaseUrl, payload).then(function (response) {
+axios.post(apiBaseUrl, payload).then(function (response) {
        if(response.status == 201){
-        console.log("offer added successfull");
+        console.log("You created offer successfully");
+      
 
-        browserHistory.push("/showOffer/")
+        //browserHistory.push("/showOffer/")
 
          }
          
@@ -49,13 +51,14 @@ class CreateOffer extends Component {
        
        else{
          console.log("some error ocurred",response.data.code);
-         browserHistory.push("/showOffer/")
+         //browserHistory.push("/showOffer/")
        }
      })
      .catch(function (error) {
        console.log(payload);
-        alert("Successfully added");
-       browserHistory.push("/showOffer/")
+        alert("You created offer successfully");
+         
+              // browserHistory.push("/showOffer/")
      });
      
     }
@@ -63,8 +66,7 @@ class CreateOffer extends Component {
       alert("Input field value is missing");
     }
 
-  }  
-
+  } 
   render() {
     return (
       <div>
@@ -91,6 +93,12 @@ class CreateOffer extends Component {
              hintText="Enter price"
              floatingLabelText="Price"
              onChange = {(event,newValue) => this.setState({price:newValue})}
+             />
+           <br/>
+            <TextField
+             hintText="Enter description"
+             floatingLabelText="Description"
+             onChange = {(event,newValue) => this.setState({description:newValue})}
              />
            <br/>
            <TextField

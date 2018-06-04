@@ -4,19 +4,29 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import { Link } from 'react-router';
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
+import './ShowOffer.css';
 
 class OrderOffer extends Component {
   constructor(props){
     super(props);
     this.state={
-      adress:'',
-      telephone:''
-    
+      order:{adress:'',
+      telephone:''},
+      offer:{name:''}
+   
       
     }
   }
-
+ componentDidMount() {
+  var offer_id=this.props.params.id;
+    axios.get('http://localhost:8079/api/catalog/offers/'+offer_id)
+      .then(res => {
+        this.setState({ offer: res.data });
+        console.log(this.state.offer);
+      });
+  }
   componentWillReceiveProps(nextProps){
     console.log("nextProps",nextProps);
   }
@@ -29,7 +39,7 @@ class OrderOffer extends Component {
       
       "adress": this.state.adress,
       "telephone":this.state.telephone,
-      "client":{"id": 2},
+      "client":{"id": 1},
       "offer":{"id": offer_id}
       
       }
@@ -39,9 +49,11 @@ class OrderOffer extends Component {
       axios.post(apiBaseUrl, payload).then(function (response) {
        if(response.status == 201){
         console.log("You order was successfull");
-      
+       console.log(payload);
+        alert("You order was successfull");
+         
 
-        //browserHistory.push("/showOffer/")
+        browserHistory.push("/showOffer/")
 
          }
          
@@ -54,7 +66,7 @@ class OrderOffer extends Component {
      })
      .catch(function (error) {
        console.log(payload);
-        alert("You order was successfull");
+        alert("error");
          
               // browserHistory.push("/showOffer/")
      });
@@ -70,34 +82,58 @@ class OrderOffer extends Component {
     return (
       <div>
         <MuiThemeProvider>
-        <div class="row">
-         <div class="card">
-        <div class="card-body">
-         <div class="panel-body">
-<div class="col-md-12 col-xs-12">
-          <div>
-           <TextField
-             hintText="Enter address"
-             floatingLabelText="Address"
-             onChange = {(event,newValue) => this.setState({adress:newValue})}
-             />
-           <br/>
-           <TextField
+          <div class="row">
+           <div class="card bg-light">
+           <div class="card-body">
+            <h4><Link to={`/showOffer`}><span class="glyphicon glyphicon-arrow-left"aria-hidden="true"></span>Back</Link></h4>
+           
+             <div class="panel-body">
+
+              <div class="col-md-6 col-xs-12 ">
+               
+                  <img class="img-fluid center" src={this.state.offer.picture} onError={(e)=>{e.target.src="https://www.logocowboy.com/wp-content/uploads/2016/06/sweet-cart.png"}} alt="Chania"/>
+            
+                  
+                </div>
+         
+              
+             <div class="col-md-6 col-xs-12">
+               <h3 class="card-title">You ordered:</h3>
+                     
+                       <h4 class="card-title">{this.state.offer.name}</h4>
+                       <p class="card-text">Price: {this.state.offer.price}km</p>
+                        <p class="card-text">Category: {this.state.offer.category}</p>
+                         <p class="card-text">Description: {this.state.offer.description}</p>
+                        
+                      
+                 
+               <span id="adres" class="glyphicon glyphicon-map-marker" ></span>
+               <TextField
+               hintText="Enter address"
+              floatingLabelText="Address"
+              onChange = {(event,newValue) => this.setState({adress:newValue})}
+              />
+             <br/>
+             <span id="adres" class="glyphicon glyphicon-phone" ></span>
+             <TextField
              hintText="Enter phone"
              floatingLabelText="Phone"
              onChange = {(event,newValue) => this.setState({telephone:newValue})}
              />
-           <br/>
-          
-           <RaisedButton label="Add" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
-          </div>
+            <br/>
+ 
+          <div id="buton">
+              <RaisedButton label="Order" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
+            </div>
+            </div>
+             
           </div>
 
           
           </div>
          </div>
          </div>
-         </div>
+
          </MuiThemeProvider>
 
       </div>
