@@ -16,7 +16,7 @@ constructor(props){
 }
 
 componentDidMount(){
-  fetch('http://localhost:8079/api/catalog/offers/all')
+  fetch('http://localhost:8079/api/ordering/offer/all')
   .then(res=> res.json())
   .then(json=>{
     this.setState({
@@ -27,7 +27,7 @@ componentDidMount(){
 }
 delete(id){
     console.log(id);
-    axios.delete('http://localhost:8079/api/catalog/offers/'+id)
+    axios.delete('http://localhost:8079/api/ordering/offer/'+id)
       .then((result) => {
         alert("Poruka: Deleted!");
         browserHistory.push('/createOffer');

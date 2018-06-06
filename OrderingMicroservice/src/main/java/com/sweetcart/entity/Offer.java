@@ -33,6 +33,18 @@ public class Offer implements Serializable{
     @NotNull(message = "category must be input") @Size(min = 2, max = 1000, message = "min 2, max 1000 elements")
     private String picture;
 
+    @NotNull(message = "Description must be input")
+    @Size(min=1, max=255, message = "size between 1 and 255")
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getPicture() {
         return picture;
     }
@@ -52,13 +64,17 @@ public class Offer implements Serializable{
     public Offer() {
     }
 
-    public Offer(@NotNull(message = "name must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements") String name, @NotNull @NotNull(message = "category must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements") String category, @NotNull(message = "cake_shopid must be input") long cake_shopid, double avg_review, @NotNull(message = "price must be input") double price) {
+    public Offer(@NotNull(message = "name must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements") String name, @NotNull(message = "category must be input") @Size(min = 2, max = 60, message = "min 2, max 60 elements") String category, @NotNull(message = "category must be input") @Size(min = 2, max = 1000, message = "min 2, max 1000 elements") String picture, @NotNull(message = "Description must be input") @Size(min = 1, max = 255, message = "size between 1 and 255") String description, @NotNull(message = "cake_shopid must be input") long cake_shopid, double avg_review, @NotNull(message = "price must be input") double price) {
         this.name = name;
         this.category = category;
+        this.picture = picture;
+        this.description = description;
         this.cake_shopid = cake_shopid;
         this.avg_review = avg_review;
         this.price = price;
     }
+
+
 
     public long getId() {
         return id;

@@ -23,8 +23,9 @@ class CreateOffer extends Component {
     console.log("nextProps",nextProps);
   }
   handleClick(event,role){
-    var apiBaseUrl = "http://localhost:8079/api/catalog/offers/add";
+    var apiBaseUrl = "http://localhost:8079/api/ordering/offer/add";
     var self = this;
+
     if(this.state.name.length>0 && this.state.description.length>0 &&this.state.category.length>0 && this.state.price.length>0 && this.state.picture.length>0 ){
       var payload={
       
@@ -34,31 +35,25 @@ class CreateOffer extends Component {
       "price": this.state.price,
        "description": this.state.description,
       "picture": this.state.picture,
-      "cakeShopId":{"id": 1}
+      "cake_shopid":1
       
       }
 
 axios.post(apiBaseUrl, payload).then(function (response) {
        if(response.status == 201){
         console.log("You created offer successfully");
-      
+     
 
-        //browserHistory.push("/showOffer/")
 
-         }
-         
         
-       
+        
+       }
        else{
          console.log("some error ocurred",response.data.code);
-         //browserHistory.push("/showOffer/")
        }
      })
      .catch(function (error) {
-       console.log(payload);
-        alert("You created offer successfully");
-         
-              // browserHistory.push("/showOffer/")
+       console.log(error);
      });
      
     }

@@ -14,7 +14,7 @@ class EditOffer extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8079/api/catalog/offers/'+this.props.params.id)
+    axios.get('http://localhost:8079/api/ordering/offer/'+this.props.params.id)
       .then(res => {
         this.setState({ offer: res.data });
         console.log(this.state.offer);
@@ -33,9 +33,9 @@ class EditOffer extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { name,category, price, picture,avg_review,cakeShopId,description} = this.state.offer;
+    const { name,category, price, picture,avg_review,cake_shopid,description} = this.state.offer;
 
-    axios.put('http://localhost:8079/api/catalog/offers/'+this.props.params.id, { name,category, price, picture,avg_review,cakeShopId,description}  )
+    axios.put('http://localhost:8079/api/ordering/offer/'+this.props.params.id, { name,category, price, picture,avg_review,cake_shopid,description}  )
       .then((result) => {
         browserHistory.push("/showOffer/")
       });

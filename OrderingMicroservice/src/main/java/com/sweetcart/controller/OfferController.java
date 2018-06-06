@@ -117,6 +117,7 @@ public class OfferController {
             currentOffer.get().setCategory(offer.getCategory());
             currentOffer.get().setPrice(offer.getPrice());
         currentOffer.get().setPicture(offer.getPicture());
+            currentOffer.get().setDescription(offer.getDescription());
 
         offerRepository.save(currentOffer.get());
             return new ResponseEntity<Optional<Offer>>(currentOffer, HttpStatus.OK);

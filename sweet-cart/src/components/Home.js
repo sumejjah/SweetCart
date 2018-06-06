@@ -42,6 +42,9 @@ constructor(props){
       console.log(res);
       if(res.status == 200){
        console.log("Login successfull");
+       localStorage.setItem("token", res.data.roleId.type);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("userId", res.data.id);
        browserHistory.replace({
         pathname: '/user/:' + res.data.id,
         state: {}

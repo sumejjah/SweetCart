@@ -100,6 +100,27 @@ public class OrdersController {
         return new ResponseEntity<Optional<Orders>>(currentOrder, HttpStatus.OK);
     }
 
+    // RETRIEVE ONE USER BY NAME
+    @RequestMapping(method = RequestMethod.GET, value = "/adress/{orderAdress}")
+    ResponseEntity<?> getOrderByAdress (@PathVariable String orderAdress) {
+
+        Collection<Orders> orders = this.ordersRepository.findAll();
+        Orders order = new Orders();
+        boolean exists = false;
+        for (Orders u: orders) {
+            if(u.getAdress().equals(orderAdress)){
+                exists = true;
+                order = u;
+            }
+        }
+
+        if (!exists) {
+            return new ResponseEntity(new CustomErrorType("Unable to login. A user with usernname " + orderAdress + " doesn't exist."),HttpStatus.CONFLICT);
+        }
+
+
+        return new ResponseEntity<Orders>(order, HttpStatus.OK);
+    }
     //DELETE ONE
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteOrder(@PathVariable("id") long id) {

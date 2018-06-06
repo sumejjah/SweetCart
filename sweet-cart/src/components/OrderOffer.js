@@ -21,7 +21,7 @@ class OrderOffer extends Component {
   }
  componentDidMount() {
   var offer_id=this.props.params.id;
-    axios.get('http://localhost:8079/api/catalog/offers/'+offer_id)
+    axios.get('http://localhost:8079/api/ordering/offer/'+offer_id)
       .then(res => {
         this.setState({ offer: res.data });
         console.log(this.state.offer);
@@ -34,41 +34,59 @@ class OrderOffer extends Component {
     var apiBaseUrl = "http://localhost:8079/api/ordering/orders/add";
     var self = this;
     var offer_id=this.props.params.id;
+    var client_id=localStorage.getItem('userId')
     if(this.state.adress.length>0 && this.state.telephone.length>0 ){
       var payload={
-      
+      "id":'',
       "adress": this.state.adress,
       "telephone":this.state.telephone,
-      "client":{"id": 1},
+      "client":{"id": 6},
       "offer":{"id": offer_id}
       
       }
+     var payload2={
+ "id":'',
+      "confirmed":0,
+      "ordersId":{"id":''}
+     }
 
 
-
-      axios.post(apiBaseUrl, payload).then(function (response) {
+       axios.post(apiBaseUrl, payload).then(function (response) {
        if(response.status == 201){
-        console.log("You order was successfull");
-       console.log(payload);
-        alert("You order was successfull");
-         
+        console.log("Your order was successfull");
 
-        browserHistory.push("/showOffer/")
+
+        axios.get("http://localhost:8079/api/ordering/orders/adress/" + payload.adress).then(res => {
+        if(res.status == 200){
+          payload2.ordersId.id = res.data.id;
+          axios.post("http://localhost:8079/api/ordering/requirement/add", payload2)
+               .then(function (response) {
+                 if(response.status == 201){
+                  console.log("You requirement was successfull");
+                 }
+                 else{
+                   console.log("some error ocurred",response.data.code);
+                 }
+               })
+               .catch(function (error) {
+                 console.log(error);
+               });
 
          }
-         
+         else{
+           console.log("Adress doesn't exit does not exists");
+         }
+        }, err => {
+          alert("Server rejected response with: " + err);
+        });
         
-       
+       }
        else{
          console.log("some error ocurred",response.data.code);
-         //browserHistory.push("/showOffer/")
        }
      })
      .catch(function (error) {
-       console.log(payload);
-        alert("error");
-         
-              // browserHistory.push("/showOffer/")
+       console.log(error);
      });
      
     }
@@ -76,7 +94,7 @@ class OrderOffer extends Component {
       alert("Input field value is missing");
     }
 
-  }  
+  }   
 
   render() {
     return (

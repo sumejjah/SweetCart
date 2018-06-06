@@ -16,7 +16,15 @@ public class AddOfferRequest {
     private long cake_shopid;
     private double avg_review;
     private double price;
+    private String description;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getName() {
         return name;
