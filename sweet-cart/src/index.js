@@ -36,8 +36,8 @@ class App extends React.Component {
                      <Route path='/orderOffer/:id' component={OrderOffer} />
                      <Route exact path="/showRequirements" component={ShowRequirements} />
                      <Route exact path="/showConfirmedRequirements" component={ShowConfirmedRequirements} />
-                     <Route exact path="/ShowUser" component={ShowUser} />
-                      <Route exact path="/ShowDetails" component={ShowDetails} />
+                     <Route exact path="/showUser" component={ShowUser} />
+                    <Route path='/showDetails/:id' component={ShowDetails} />
                 </Route>
 
                 <Route path={"home-single"} component={Home}/>
