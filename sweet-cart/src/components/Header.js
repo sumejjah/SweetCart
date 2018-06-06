@@ -4,7 +4,7 @@ import {Link} from "react-router";
 export const Header = (props) => {
     return (
        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
@@ -18,15 +18,15 @@ export const Header = (props) => {
             <li className="nav-item">
               <a className="nav-link" href="#"><Link to={"/registerClient"} activeClasssName={"active"}>RegisterClient</Link></a>
             </li>
-            
+
             <li className="nav-item">
               <a className="nav-link" href="#"><Link to={"/createOffer"} activeClassName={"active"}>Create Offer</Link></a>
             </li>
-            
+
             <li className="nav-item">
               <a className="nav-link" href="#"><Link to={"/showOffer"} activeClassName={"active"}>Show Offer</Link></a>
             </li>
-            
+
             <li className="nav-item">
               <a className="nav-link" href="#"><Link to={"/showRequirements"} activeClassName={"active"}>Show Requirements</Link></a>
             </li>
@@ -34,7 +34,9 @@ export const Header = (props) => {
             <li className="nav-item">
               <a className="nav-link" href="#"><Link to={"/showConfirmedRequirements"} activeClassName={"active"}>Show Confirmed Requirements</Link></a>
             </li>
-
+            <li className="nav-item">
+              <a className="nav-link" href="#"><Link to={"/showUser"} activeClassName={"active"}>Show User</Link></a>
+            </li>
           </ul>
           <form className="form-inline my-2 my-lg-0">
             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
