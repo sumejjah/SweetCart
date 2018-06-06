@@ -85,11 +85,11 @@ componentDidMount(){
                         <h5>In category: {requirement.ordersId.offer.category}</h5>
                       </div>
                       <div class="col-md-4">  
-                        <h4>{requirement.ordersId.offer.price}$</h4>
+                        <h4 class = "pt-4">{requirement.ordersId.offer.price}$</h4>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-2 pt-4">
 
-                      <button type="submit" class="btn btn-danger" onClick={this.clickHandler.bind(this, requirement.id )}>Confirm order</button>
+                      <button type="submit" class="btn btn-success" onClick={this.clickHandler.bind(this, requirement.id )}><span class="glyphicon glyphicon-ok"></span>Confirm order</button>
                       
                         
                       </div>

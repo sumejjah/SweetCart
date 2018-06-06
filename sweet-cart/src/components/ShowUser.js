@@ -30,7 +30,7 @@ delete(id){
     axios.delete('http://localhost:8079/api/identify/users/'+id)
       .then((result) => {
         alert("Poruka: Deleted!");
-        browserHistory.push('/createOffer');
+        browserHistory.push('/ShowUser');
 
       });
 
@@ -51,22 +51,18 @@ delete(id){
               <div class="card-body">
                  <div class="row">
 
-
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                        <h4 class="card-text">{user.id}</h4>
-                       <p class="card-text">User: {user.username}</p>
-
-
-
-                      </div>
-
-
-                       <div class="col-md-2">
-
-
-                       <Link to={`/showDetails/${user.id}`} class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-ok"></span>Details</Link>&nbsp;
-
-                        </div>
+                    </div>
+                    <div class="col-md-8">
+                       <h4 class="card-text">User: {user.username}</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <Link to={`/showDetails/${user.id}`} class="btn btn-primary btn-primary">Details</Link>&nbsp;
+                        <button onClick={this.delete.bind(this, user.id)} className="btn btn-danger">Delete</button>&nbsp;
+    
+                    </div>
+                  
                   </div>
                 </div>
             </div>

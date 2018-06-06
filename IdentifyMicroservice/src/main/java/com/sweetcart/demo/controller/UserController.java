@@ -84,7 +84,7 @@ public class UserController {
         User user = new User();
         boolean exists = false;
         for (User u: users) {
-            if(u.getUsername().equals(userName)){
+            if(u.getUsername().equals(userName)&& u.getPassword().equals(password)){
                 exists = true;
                 user = u;
             }

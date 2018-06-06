@@ -73,10 +73,13 @@ delete(id){
                           </div>
                           </div>
                     </div>
-                        <Link to={`/editOffer/${offer.id}`} className="btn btn-success">Edit</Link>&nbsp;
-                      <button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>&nbsp;
+                    {localStorage.getItem('token') === 'cake_shop' &&
+                        <Link to={`/editOffer/${offer.id}`} className="btn btn-success">Edit</Link>}&nbsp;
+                        {localStorage.getItem('token') === 'cake_shop' &&
+                      <button onClick={this.delete.bind(this, offer.id)} className="btn btn-danger">Delete</button>}&nbsp;
                        
-                        <Link to={`/orderOffer/${offer.id}`} class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-ok"></span>Order</Link>&nbsp;
+                       {localStorage.getItem('token') === 'client' &&
+                        <Link to={`/orderOffer/${offer.id}`} class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-ok"></span>Order</Link>}&nbsp;
                       
                       
 
